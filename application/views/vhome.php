@@ -318,7 +318,7 @@
             kromosom += jarak;
           };
 
-          teks += 'P'+parseInt(i+1)+' = '+no+' = '+populasi[i]+' = '+kromosom+'<br>';
+          teks += 'P'+parseInt(i+1)+' = '+no+' = '+populasi[i]+' = '+kromosom+'&nbsp; KM '+fitness+'&nbsp;<br>';
         }
         result2 = teks;
         $('#seleksihasil').html(teks);
@@ -326,20 +326,25 @@
 
       $('#initpop').click(function(){
         var result = '';
+        var header = '';
         for (var i = 0; i < 6; i++) {
           populasi[i] = initIndividu();
           var m = i+1;
           var kromosom = 0;
           var kalimat = '';
+          var fitness = 0;
           for (var j = 0; j <= 8; j=j+2) {
             jarak = totaljarak(populasi[i],j);
             kalimat += jarak+' ';
             kromosom += jarak;
+            fitness += 1/kromosom;
           };
-          result += 'P'+m+'&#9; = '+populasi[i]+' = &nbsp;'+kromosom+'&nbsp; KM<br>';
+
+          result += 'P'+m+'&#9; = '+populasi[i]+' = &nbsp;'+kromosom+'&nbsp; KM '+fitness+'&nbsp;<br>';
           result2 = result;
         }
-        $('#result').html(result);
+        header += '<table> <th>Parent</th> <th>Kromosom</th> <th>Jarak</th> <th>Fitness</th> </table>';
+        $('#result').html(header+result);
       });
 
       $('#Reproduksi').click(function(){
@@ -368,12 +373,14 @@
           mutasi[i] += 'A';
           var kromosom = 0;
           var kalimat = '';
+          var fitness = 0;
           for (var j = 0; j <= 8; j=j+2) {
             jarak = totaljarak(mutasi[i],j);
             kalimat += jarak+' ';
             kromosom += jarak;
+            fitness += 1/kromosom;
           };
-          hasil += 'P\''+m+'&#9; = '+mutasi[i]+' = &nbsp;'+kromosom+'&nbsp; KM<br>';
+          hasil += 'P\''+m+'&#9; = '+mutasi[i]+' = &nbsp;'+kromosom+'&nbsp; KM'+fitness+'&nbsp;<br>';
         }
         $('#hasil').html(hasil);
         $('#gen').html(result2+hasil);
