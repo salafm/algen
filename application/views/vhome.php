@@ -327,6 +327,7 @@
 
       $('#initpop').click(function(){
         var result = '';
+        var result3 = '';
         var header = '';
         for (var i = 0; i < 6; i++) {
           populasi[i] = initIndividu();
@@ -340,7 +341,7 @@
             kromosom += jarak;
             fitness += 1/kromosom;
           };
-
+          result3 += '<table><tr><td>P&nbsp;'+m+'</td><td>&nbsp;'+populasi[i]+'</td><td>'+kromosom+'</td>'+'<td>KM</td><td>'+fitness'</td></tr></table>';
           result += 'P'+m+'&#9; = '+populasi[i]+' = &nbsp;'+kromosom+'&nbsp; KM '+fitness+'&nbsp;<br>';
           result2 = result;
         }
