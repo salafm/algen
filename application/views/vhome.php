@@ -75,7 +75,7 @@
                 <div class="col-lg-6">
                   <div class="card">
                     <div class="card-header d-flex align-items-center">
-                      <h3 class="h4">Populasi</h3>
+                      <h3 class="h4">Populasi Awal</h3>
                     </div>
                     <div class="card-body">
                       <div id="result">
@@ -105,7 +105,7 @@
                 <div class="col-lg-6">
                   <div class="card">
                     <div class="card-header d-flex align-items-center">
-                      <h3 class="h4">Generasi Baru</h3>
+                      <h3 class="h4" id="nama_gen">Generasi Baru</h3>
                     </div>
                     <div class="card-body">
                       <div id="gen">
@@ -126,6 +126,8 @@
                       <div id="seleksihasil">
 
                       </div>
+                      <br>
+                      <a class="btn text-dark" id="sorting">Sorting</a>
                     </div>
                   </div>
                 </div>
@@ -180,6 +182,7 @@
       var generasi = new Array();
       var fitness = new Array();
       var roullete = new Array();
+      var counter = 0;
       var result2 = '';
 
       arrayjarak['A-B'] = 450;
@@ -224,7 +227,6 @@
         if(jarak === undefined){
           jarak = arrayjarak[str.substring(k,k+3).split('').reverse().join('')];
         }
-
         return jarak;
       }
 
@@ -232,6 +234,7 @@
         var sum = 0;
         var sum2 = 0;
         var teks = '';
+        var teks2 = '';
 
         for (var i = 0; i < parent.length; i++) {
           generasi[i] = parent[i];
@@ -320,10 +323,15 @@
             fx += 1/jarak;
           };
           teks += '<tr><td>P'+parseInt(i+1)+'</td><td>'+no+'</td><td>'+populasi[i]+'</td><td>'+kromosom+'&nbsp; KM </td><td>'+fx+'</td></tr>';
+          teks2 += '<tr><td>P'+parseInt(i+1)+'</td><td>'+populasi[i]+'</td><td>'+kromosom+'&nbsp; KM </td><td>'+fx+'</td></tr>';
         }
+<<<<<<< Updated upstream
         header = '<table class="table table-bordered"> <th>Parent</th> <th>Offspring to Parent</th> <th>Kromosom</th> <th>Jarak</th> <th>Fitness</th>';
+=======
+        header = '<table class="table table-bordered"> <th>Parent</th>  <th>Individu Lama</th> <th>Kromosom</th> <th>Jarak</th> <th>Fitness</th>';
+>>>>>>> Stashed changes
         footer = '</table>'
-        result2 = teks;
+        result2 = teks2;
         $('#seleksihasil').html(header+teks+footer);
       }
 
@@ -350,10 +358,12 @@
         header = '<table class="table table-bordered"> <th>Parent</th> <th>Kromosom</th> <th>Jarak</th> <th>Fitness</th>';
         footer = '</table>'
         $('#result').html(header+result+footer);
+        $(this).hide();
       });
 
       $('#Reproduksi').click(function(){
         var hasil = '';
+        counter++;
         for (var i = 0; i < populasi.length; i++) {
           repro[i] = populasi[i];
           var m = i+1;
@@ -385,16 +395,44 @@
             kromosom += jarak;
             fitness += 1/jarak;
           };
+<<<<<<< Updated upstream
           hasil += '<tr><td>P*'+m+'</td><td> '+populasi[i]+'</td><td>'+kromosom+'&nbsp; KM </td><td>'+fitness+'</td></tr>';
+=======
+          hasil += '<tr><td>P\''+m+'</td><td> '+populasi[i]+'</td><td>'+kromosom+'&nbsp; KM </td><td>'+fitness+'</td></tr>';
+>>>>>>> Stashed changes
           header = '<table class="table table-bordered"> <th>Parent</th> <th>Kromosom</th> <th>Jarak</th> <th>Fitness</th>';
           footer = '</table>'
         }
         $('#hasil').html(header+hasil+footer);
         $('#gen').html(header+result2+hasil+footer);
+        $(this).hide();
+        $('#nama_gen').html('Generasi Ke-'+counter);
+        $('#seleksi').show();
       });
 
       $('#seleksi').click(function(){
         roulettewheel(populasi,mutasi);
+        $('#Reproduksi').show();
+        $(this).hide();
+      });
+
+      $('#sorting').click(function(){
+          for (var i = 0; i < 6; i++) {
+            var kromosom = 0;
+            var kalimat = '';
+            var fx = 0;
+            for (var j = 0; j <= 8; j=j+2) {
+              jarak = totaljarak(populasi[i],j);
+              kalimat += jarak+' ';
+              kromosom += jarak;
+              fx += 1/kromosom;
+            };
+            teks += '<tr><td>'+no+'</td><td>'+populasi[i]+'</td><td>'+kromosom+'&nbsp; KM </td><td>'+fx+'</td></tr>';
+          }
+          header = '<table class="table table-bordered"> <th>Individu Lama</th> <th>Kromosom</th> <th>Jarak</th> <th>Fitness</th>';
+          footer = '</table>'
+          result2 = teks;
+          $('#seleksihasil').html(header+teks+footer);
       });
     </script>
   </body>
