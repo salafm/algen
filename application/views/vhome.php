@@ -130,7 +130,7 @@
                   </div>
                 </div>
                 <!-- Horizontal Form-->
-                <div class="col-lg-12">
+                <!-- <div class="col-lg-12">
                   <div class="card">
                     <div class="card-header d-flex align-items-center">
                       <h3 class="h4">Maps</h3>
@@ -141,7 +141,7 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> -->
               </div>
             </div>
           </section>
@@ -171,7 +171,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <script src="<?=base_url()?>assets/js/charts-home.js"></script>
     <script src="<?=base_url()?>assets/js/front.js"></script>
-    <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD67CZhRsaW-5_QbtsAeE2ecChe_UaS1jA&callback=initMap" type="text/javascript"></script> -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwW5b1RmYGIJIg1OWr00VUAgEUB4n_oP8&callback=initMap"></script>
     <script type="text/javascript">
       var arrayjarak = new Array();
       var populasi = new Array();
@@ -319,10 +319,12 @@
             kromosom += jarak;
             fx += 1/kromosom;
           };
-          teks += 'P'+parseInt(i+1)+' = '+no+' = '+populasi[i]+' = '+kromosom+'&nbsp; KM '+fx+'&nbsp;<br>';
+          teks += '<tr><td>P'+parseInt(i+1)+'</td><td>'+no+'</td><td>'+populasi[i]+'</td><td>'+kromosom+'&nbsp; KM </td><td>'+fx+'</td></tr>';
         }
+        header = '<table class="table table-bordered"> <th>Parent</th> <th>Kromosom</th> <th>Jarak</th> <th>Fitness</th>';
+        footer = '</table>'
         result2 = teks;
-        $('#seleksihasil').html(teks);
+        $('#seleksihasil').html(header+teks+footer);
       }
 
       $('#initpop').click(function(){
@@ -341,11 +343,12 @@
             fitness += 1/kromosom;
           };
 
-          result += 'P'+m+'&#9; = '+populasi[i]+' = &nbsp;'+kromosom+'&nbsp; KM '+fitness+'&nbsp;<br>';
+          result += '<tr><td>P'+m+'</td><td> '+populasi[i]+'</td><td>'+kromosom+'&nbsp; KM </td><td>'+fitness+'</td></tr>';
           result2 = result;
         }
-        header += '<table> <th>Parent</th> <th>Kromosom</th> <th>Jarak</th> <th>Fitness</th> </table>';
-        $('#result').html(header+result);
+        header = '<table class="table table-bordered"> <th>Parent</th> <th>Kromosom</th> <th>Jarak</th> <th>Fitness</th>';
+        footer = '</table>'
+        $('#result').html(header+result+footer);
       });
 
       $('#Reproduksi').click(function(){
@@ -381,25 +384,17 @@
             kromosom += jarak;
             fitness += 1/kromosom;
           };
-          hasil += 'P\''+m+'&#9; = '+mutasi[i]+' = &nbsp;'+kromosom+'&nbsp; KM'+fitness+'&nbsp;<br>';
+          hasil += '<tr><td>P'+m+'</td><td> '+populasi[i]+'</td><td>'+kromosom+'&nbsp; KM </td><td>'+fitness+'</td></tr>';
+          header = '<table class="table table-bordered"> <th>Parent</th> <th>Kromosom</th> <th>Jarak</th> <th>Fitness</th>';
+          footer = '</table>'
         }
-        $('#hasil').html(hasil);
-        $('#gen').html(result2+hasil);
+        $('#hasil').html(header+hasil+footer);
+        $('#gen').html(header+result2+hasil+footer);
       });
 
       $('#seleksi').click(function(){
         roulettewheel(populasi,mutasi);
       });
-
-      var map;
-      function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -7.005145, lng: 110.438125},
-          zoom: 8
-        });
-      }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwW5b1RmYGIJIg1OWr00VUAgEUB4n_oP8&callback=initMap"
-    async defer></script>
   </body>
 </html>
