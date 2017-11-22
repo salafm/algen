@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="<?=base_url()?>assets/css/custom.css">
     <!-- Favicon-->
     <link rel="shortcut icon" href="favicon.png">
+    <!-- Dt css button -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.4.2/css/buttons.dataTables.min.css">
     <!-- Tweaks for older IEs--><!--[if lt IE 9] -->
     <style media="screen">
     .content-inner{
@@ -127,7 +129,7 @@
 
                       </div>
                       <br>
-                      <a class="btn text-dark" id="sorting">Sorting</a>
+                      <!-- <a class="btn text-dark" id="sorting">Sorting</a> -->
                     </div>
                   </div>
                 </div>
@@ -171,9 +173,15 @@
     <script src="<?=base_url()?>assets/vendor/jquery.cookie/jquery.cookie.js"> </script>
     <script src="<?=base_url()?>assets/vendor/jquery-validation/jquery.validate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script> -->
+    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script> -->
+    <script src="//cdn.datatables.net/buttons/1.4.2/js/buttons.html5.min.js"></script>
+    <!-- <script src="//cdn.datatables.net/buttons/1.4.2/js/buttons.print.min.js"></script> -->
     <script src="<?=base_url()?>assets/js/charts-home.js"></script>
     <script src="<?=base_url()?>assets/js/front.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwW5b1RmYGIJIg1OWr00VUAgEUB4n_oP8&callback=initMap"></script>
     <script type="text/javascript">
       var arrayjarak = new Array();
       var populasi = new Array();
@@ -325,14 +333,15 @@
           teks += '<tr><td>P'+parseInt(i+1)+'</td><td>'+no+'</td><td>'+populasi[i]+'</td><td>'+kromosom+'&nbsp; KM </td><td>'+fx+'</td></tr>';
           teks2 += '<tr><td>P'+parseInt(i+1)+'</td><td>'+populasi[i]+'</td><td>'+kromosom+'&nbsp; KM </td><td>'+fx+'</td></tr>';
         }
-<<<<<<< Updated upstream
-        header = '<table class="table table-bordered"> <th>Parent</th> <th>Offspring to Parent</th> <th>Kromosom</th> <th>Jarak</th> <th>Fitness</th>';
-=======
-        header = '<table class="table table-bordered"> <th>Parent</th>  <th>Individu Lama</th> <th>Kromosom</th> <th>Jarak</th> <th>Fitness</th>';
->>>>>>> Stashed changes
-        footer = '</table>'
+        header = '<table class="table table-bordered" id="myTable"> <thead><th>Parent</th>  <th>Offspring to Parent</th> <th>Kromosom</th> <th>Jarak</th> <th>Fitness</th></thead><tbdoy>';
+        footer = '</tbdoy></table>'
         result2 = teks2;
         $('#seleksihasil').html(header+teks+footer);
+        $('#myTable').DataTable({
+          paging:false,
+          searching:false,
+          info:false,
+        });
       }
 
       $('#initpop').click(function(){
@@ -395,11 +404,7 @@
             kromosom += jarak;
             fitness += 1/jarak;
           };
-<<<<<<< Updated upstream
-          hasil += '<tr><td>P*'+m+'</td><td> '+populasi[i]+'</td><td>'+kromosom+'&nbsp; KM </td><td>'+fitness+'</td></tr>';
-=======
           hasil += '<tr><td>P\''+m+'</td><td> '+populasi[i]+'</td><td>'+kromosom+'&nbsp; KM </td><td>'+fitness+'</td></tr>';
->>>>>>> Stashed changes
           header = '<table class="table table-bordered"> <th>Parent</th> <th>Kromosom</th> <th>Jarak</th> <th>Fitness</th>';
           footer = '</table>'
         }
@@ -414,25 +419,6 @@
         roulettewheel(populasi,mutasi);
         $('#Reproduksi').show();
         $(this).hide();
-      });
-
-      $('#sorting').click(function(){
-          for (var i = 0; i < 6; i++) {
-            var kromosom = 0;
-            var kalimat = '';
-            var fx = 0;
-            for (var j = 0; j <= 8; j=j+2) {
-              jarak = totaljarak(populasi[i],j);
-              kalimat += jarak+' ';
-              kromosom += jarak;
-              fx += 1/kromosom;
-            };
-            teks += '<tr><td>'+no+'</td><td>'+populasi[i]+'</td><td>'+kromosom+'&nbsp; KM </td><td>'+fx+'</td></tr>';
-          }
-          header = '<table class="table table-bordered"> <th>Individu Lama</th> <th>Kromosom</th> <th>Jarak</th> <th>Fitness</th>';
-          footer = '</table>'
-          result2 = teks;
-          $('#seleksihasil').html(header+teks+footer);
       });
     </script>
   </body>
