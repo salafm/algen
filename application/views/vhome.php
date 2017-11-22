@@ -317,11 +317,11 @@
             jarak = totaljarak(populasi[i],j);
             kalimat += jarak+' ';
             kromosom += jarak;
-            fx += 1/kromosom;
+            fx += 1/jarak;
           };
           teks += '<tr><td>P'+parseInt(i+1)+'</td><td>'+no+'</td><td>'+populasi[i]+'</td><td>'+kromosom+'&nbsp; KM </td><td>'+fx+'</td></tr>';
         }
-        header = '<table class="table table-bordered"> <th>Parent</th> <th>Kromosom</th> <th>Jarak</th> <th>Fitness</th>';
+        header = '<table class="table table-bordered"> <th>Parent</th> <th>Offspring to Parent</th> <th>Kromosom</th> <th>Jarak</th> <th>Fitness</th>';
         footer = '</table>'
         result2 = teks;
         $('#seleksihasil').html(header+teks+footer);
@@ -341,15 +341,10 @@
             jarak = totaljarak(populasi[i],j);
             kalimat += jarak+' ';
             kromosom += jarak;
-            fitness += 1/kromosom;
+            fitness += 1/jarak;
           };
-<<<<<<< HEAD
-          result3 += '<table><tr><td>P&nbsp;'+m+'</td><td>&nbsp;'+populasi[i]+'</td><td>'+kromosom+'</td>'+'<td>KM</td><td>'+fitness'</td></tr></table>';
-          result += 'P'+m+'&#9; = '+populasi[i]+' = &nbsp;'+kromosom+'&nbsp; KM '+fitness+'&nbsp;<br>';
-=======
 
           result += '<tr><td>P'+m+'</td><td> '+populasi[i]+'</td><td>'+kromosom+'&nbsp; KM </td><td>'+fitness+'</td></tr>';
->>>>>>> 84b81688114f2cc7799a01500088152071b1b4fe
           result2 = result;
         }
         header = '<table class="table table-bordered"> <th>Parent</th> <th>Kromosom</th> <th>Jarak</th> <th>Fitness</th>';
@@ -388,9 +383,9 @@
             jarak = totaljarak(mutasi[i],j);
             kalimat += jarak+' ';
             kromosom += jarak;
-            fitness += 1/kromosom;
+            fitness += 1/jarak;
           };
-          hasil += '<tr><td>P'+m+'</td><td> '+populasi[i]+'</td><td>'+kromosom+'&nbsp; KM </td><td>'+fitness+'</td></tr>';
+          hasil += '<tr><td>P*'+m+'</td><td> '+populasi[i]+'</td><td>'+kromosom+'&nbsp; KM </td><td>'+fitness+'</td></tr>';
           header = '<table class="table table-bordered"> <th>Parent</th> <th>Kromosom</th> <th>Jarak</th> <th>Fitness</th>';
           footer = '</table>'
         }
