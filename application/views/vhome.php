@@ -312,13 +312,14 @@
           populasi[i] = generasi[key];
           var kromosom = 0;
           var kalimat = '';
+          var fx = 0;
           for (var j = 0; j <= 8; j=j+2) {
             jarak = totaljarak(populasi[i],j);
             kalimat += jarak+' ';
             kromosom += jarak;
+            fx += 1/kromosom;
           };
-
-          teks += 'P'+parseInt(i+1)+' = '+no+' = '+populasi[i]+' = '+kromosom+'&nbsp; KM '+fitness+'&nbsp;<br>';
+          teks += 'P'+parseInt(i+1)+' = '+no+' = '+populasi[i]+' = '+kromosom+'&nbsp; KM '+fx+'&nbsp;<br>';
         }
         result2 = teks;
         $('#seleksihasil').html(teks);
