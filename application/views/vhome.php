@@ -71,7 +71,7 @@
           <!-- Page Header-->
           <header class="page-header">
             <div class="container-fluid">
-              <h2 class="no-margin-bottom">KASUS TSP</h2>
+              <h2 class="no-margin-bottom">Presentasi Traveling Salesman Problem</h2>
             </div>
           </header>
           <!-- Dashboard Counts Section-->
@@ -94,37 +94,42 @@
                 <div class="col-lg-6">
                   <div class="card">
                     <div class="card-header d-flex align-items-center">
-                      <h3 class="h4">Setting 2</h3>
+                      <h3 class="h4">Setting Parameter</h3>
                     </div>
                     <div class="card-body">
                       <div>
                         <table>
                             <tr>
-                                <td colspan="2"><b>Configuration</b></td>
+                                <td colspan="2" ><b>Konfigurasi Variabel</b></td>
                             </tr>
                             <tr>
-                                <td>Travel Mode: </td>
+                                <td>Mode Perjalanan: </td>
                                 <td>
-                                    <select id="travel-type">
-                                        <option value="DRIVING">Car</option>
-                                        <option value="BICYCLING">Bicycle</option>
-                                        <option value="WALKING">Walking</option>
+                                  <div class="input-group col-md-12">
+                                    <select class="mode form-control" id="travel-type">
+                                        <option value="DRIVING">Mobil</option>
+                                        <option value="BICYCLING">Sepeda</option>
+                                        <option value="WALKING">Jalan Kaki</option>
                                     </select>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
-                                <td>Avoid Highways: </td>
+                                <td>Hindari Jalan Tol: </td>
                                 <td>
-                                    <select id="avoid-highways">
+                                  <div class="input-group col-md-12">
+                                    <select class="tol form-control" id="avoid-highways">
                                         <option value="1">Enabled</option>
                                         <option value="0" selected="selected">Disabled</option>
                                     </select>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Population Size: </td>
                                 <td>
-                                    <select id="population-size">
+                                  <div class="input-group col-md-12">
+                                    <select class="popsize form-control" id="population-size">
                                         <option value="5">5</option>
                                         <option value="10">10</option>
                                         <option value="20">20</option>
@@ -132,12 +137,14 @@
                                         <option value="100">100</option>
                                         <option value="200">200</option>
                                     </select>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Mutation Rate: </td>
                                 <td>
-                                    <select id="mutation-rate">
+                                  <div class="input-group col-md-12">
+                                    <select class="mr form-control"  id="mutation-rate">
                                         <option value="0.00">0.00</option>
                                         <option value="0.05">0.01</option>
                                         <option value="0.05">0.05</option>
@@ -147,12 +154,14 @@
                                         <option value="0.7">0.7</option>
                                         <option value="1">1.0</option>
                                     </select>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Crossover Rate: </td>
                                 <td>
-                                    <select id="crossover-rate">
+                                  <div class="input-group col-md-12">
+                                    <select class="cr form-control" id="crossover-rate">
                                         <option value="0.0">0.0</option>
                                         <option value="0.1">0.1</option>
                                         <option value="0.2">0.2</option>
@@ -165,25 +174,30 @@
                                         <option value="0.9">0.9</option>
                                         <option value="1">1.0</option>
                                     </select>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Elitism: </td>
                                 <td>
-                                    <select id="elitism">
+                                    <div class="input-group col-md-12">
+                                    <select class="elitism form-control" id="elitism">
                                         <option value="1" selected="selected">Enabled</option>
                                         <option value="0">Disabled</option>
                                     </select>
+                                  </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Max Generations: </td>
                                 <td>
-                                    <select id="generations">
+                                  <div class="input-group col-md-12">
+                                    <select class="maxgen form-control" id="generations">
                                         <option value="20">20</option>
                                         <option value="50" selected="selected">50</option>
                                         <option value="100">100</option>
                                     </select>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
@@ -191,16 +205,13 @@
                             </tr>
                             <tr>
                                 <td>Destinations Count: </td>
-                                <td id="destinations-count">0</td>
+                                <td class="input-group col-md-12" id="destinations-count">0</td>
                             </tr>
                             <tr class="ga-info" style="display:none;">
                                 <td>Generations: </td><td id="generations-passed">0</td>
                             </tr>
                             <tr class="ga-info" style="display:none;">
-                                <td>Best Time: </td><td id="best-time">?</td>
-                            </tr>
-                            <tr id="ga-buttons">
-                                <td colspan="2"><button id="find-route">Start</button> <button id="clear-map">Clear</button></td>
+                                <td>Waktu Terbaik: </td><td id="best-time">?</td>
                             </tr>
                         </table>
                       </div>
@@ -210,7 +221,7 @@
                 <div class="col-lg-6">
                   <div class="card">
                     <div class="card-header d-flex align-items-center">
-                      <h3 class="h4">Setting 1</h3>
+                      <h3 class="h4">Setting Kota</h3>
                     </div>
                     <div class="card-body">
                       <div class="" id="pilihkota">
@@ -314,7 +325,7 @@
             <div class="container-fluid">
               <div class="row">
                 <div class="col-sm-6">
-                  <p>Your company &copy; 2017-2019</p>
+                  <p>Lulus Cepet &copy; 2018</p>
                 </div>
                 <div class="col-sm-6 text-right">
                   <p>Design by <a href="https://bootstrapious.com/admin-templates" class="external">Kelompok Alev</a></p>
