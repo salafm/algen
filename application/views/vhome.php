@@ -648,8 +648,8 @@
             if (nodes.length >= 1) {
               // $('.plus').show();
               // $('.minus').show();
-              $(this).closest('.form-inline').prev().find('button.plus').hide();
-              $(this).closest('.form-inline').prev().find('button.minus').hide();
+              $(this).closest('.form-inline').prevAll().find('button.plus').hide();
+              $(this).closest('.form-inline').prevAll().find('button.minus').hide();
               $(this).closest('.form-inline').find('button.plus').show();
               $(this).closest('.form-inline').find('button.minus').show();
             }
@@ -722,6 +722,8 @@
       var elem = $(this).closest('.form-inline');
       var kotake = parseInt($(this).closest('.form-inline').find('.kotake').html().replace('Kota ',''));
       $('#pilihkota').append(elem.clone()).html();
+      elem.find('button.minus').hide();
+      elem.find('button.plus').hide();
       elem.next().find('button.minus').hide();
       elem.next().find('button.plus').hide();
       elem.prevAll().find('button.plus').hide();
@@ -735,10 +737,10 @@
         $(this).closest('.form-inline').find('.kota').prop('disabled',false);
         $(this).closest('.form-inline').find('button.plus').hide();
         $(this).closest('.form-inline').find('button.minus').hide();
-        $(this).closest('.form-inline').prevAll().find('button.plus').hide();
-        $(this).closest('.form-inline').prevAll().find('button.minus').hide();
         $('option').show();
       }else{
+        $(this).closest('.form-inline').prev().find('button.plus').show();
+        $(this).closest('.form-inline').prev().find('button.minus').show();
         $(this).closest('.form-inline').prev().find('div.col-md-2').show();
         $(this).closest('.form-inline').remove();
       }
