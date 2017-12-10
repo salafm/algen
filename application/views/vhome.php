@@ -236,7 +236,7 @@
                           <div class="form-group col-md-3">
                             <button type="button" name="button" class="btn bg-blue plus" style="display:none"><i class="fa fa-plus"></i></button>
                             <span style="padding-left:10px"></span>
-                            <button type="button" name="button" class="btn bg-red minus"><i class="fa fa-minus"></i></button>
+                            <button type="button" name="button" class="btn bg-red minus" style="display:none"><i class="fa fa-minus"></i></button>
                           </div>
                         </div>
                       </div>
@@ -634,7 +634,15 @@
             $('#destinations-count').html(nodes.length);
             $(this).children('option:selected').hide();
             $(this).prop('disabled',true);
-            $('.plus').show();
+            if (nodes.length >= 1) {
+              // $('.plus').show();
+              // $('.minus').show();
+              $(this).closest('.form-inline').prev().find('button.plus').hide();
+              $(this).closest('.form-inline').prev().find('button.minus').hide();
+              $(this).closest('.form-inline').find('button.plus').show();
+              $(this).closest('.form-inline').find('button.minus').show();
+            }
+
         });
     }
 
@@ -703,8 +711,10 @@
       var elem = $(this).closest('.form-inline');
       var kotake = parseInt($(this).closest('.form-inline').find('.kotake').html().replace('Kota ',''));
       $('#pilihkota').append(elem.clone()).html();
-      elem.next().find('button.minus').show();
+      elem.next().find('button.minus').hide();
       elem.next().find('button.plus').hide();
+      elem.prevAll().find('button.plus').hide();
+      elem.prevAll().find('button.minus').hide();
       elem.next().find('.kotake').html('Kota '+parseInt(kotake+1));
       elem.next().find('.kota').prop('disabled',false);
       $(this).closest('div.col-md-2').hide();
@@ -713,6 +723,9 @@
       if(index == 0){
         $(this).closest('.form-inline').find('.kota').prop('disabled',false);
         $(this).closest('.form-inline').find('button.plus').hide();
+        $(this).closest('.form-inline').find('button.minus').hide();
+        $(this).closest('.form-inline').prevAll().find('button.plus').hide();
+        $(this).closest('.form-inline').prevAll().find('button.minus').hide();
         $('option').show();
       }else{
         $(this).closest('.form-inline').prev().find('div.col-md-2').show();
