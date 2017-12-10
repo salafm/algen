@@ -594,7 +594,7 @@
     var nodes = [];
     var prevNodes = [];
     var markers = [];
-    var durations = [];
+    var jarak = [];
     // Initialize google maps
     function initializeMap() {
         // Map options
@@ -697,7 +697,45 @@
         pop.push(kromosom);
       }
       console.log(pop);
+      this.getjarak();
+      console.log(jarak);
     };
+
+    function getjarak(){
+      for (var i = 0; i < pop.length; i++) {
+        for (var j = 0; j < kota.length; j++) {
+          var start = nodes[kota.indexOf(pop[i][j])];
+          var end = nodes[kota.indexOf(pop[i][j+1])];
+          calculateDistances(start,end,function(rs){
+            jarak.push(rs);
+          });
+        }
+      }
+    }
+
+    function calculateDistances(start, end, fn) {
+      var service = new google.maps.DistanceMatrixService();
+      service.getDistanceMatrix(
+      {
+        origins: [start],
+        destinations: [end],
+        travelMode: google.maps.TravelMode.DRIVING,
+        avoidHighways: false,
+        avoidTolls: false
+      }, function callback(response, status) {
+        if (status!==google.maps.DistanceMatrixStatus.OK) {
+        _googleError('Error was: ' + status);
+        } else {
+          var origins = response.originAddresses;
+          for (var i = 0; i < origins.length; i++) {
+            var results = response.rows[i].elements;
+            for (var j = 0; j < results.length; j++) {
+              fn(results[j].distance.value/1000);
+            }
+          }
+        }
+      });
+    }
 
     $(document).on('click','.plus',function(){
       var elem = $(this).closest('.form-inline');
