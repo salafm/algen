@@ -368,7 +368,6 @@
               $(this).closest('.form-inline').find('button.plus').show();
               $(this).closest('.form-inline').find('button.minus').show();
             }
-
         });
     }
 
@@ -475,6 +474,7 @@
 
     function ga(){
       initpop();
+<<<<<<< HEAD
       $.when(this.getjarak()).done(function(x){
         for (var i = 0; i < rute.length; i++) {
           // console.log('fullpath :('+i+')'+rute[i]);
@@ -524,6 +524,15 @@
       for (var i = 0; i < arr.length; i++) {
         var fitnes = 1/arr[i]
         sum += fitnes;
+=======
+      if (nodes.length <= 1 ) {
+          alert('Kita ga kemana mana');
+          return;
+      }
+      for (var i = 0; i < pop.length; i++) {
+        $('#result').append(pop[i]+'<br>');
+        $('#result2').append(pop[i]+'<br>');
+>>>>>>> 165ed47453dd9355dc27dec781f54a0a590b7592
       }
 
       for (var i = 0; i < arr.length; i++) {
