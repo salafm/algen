@@ -727,6 +727,10 @@
 
     function ga(){
       initpop();
+      if (nodes.length <= 1 ) {
+          alert('Kita ga kemana mana');
+          return;
+      }
       for (var i = 0; i < pop.length; i++) {
         $('#result').append(pop[i]+'<br>');
         $('#result2').append(pop[i]+'<br>');
