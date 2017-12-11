@@ -252,7 +252,7 @@
                         </div>
                       </div>
                       <div class="col-md-12 form-inline" style="margin-left:10px;margin-top:10px;">
-                        <button type="button" name="button" id="start" class="btn bg-navy"><span class="fa fa-start"></span> Start</button>
+                        <button type="button" name="button" id="start" class="btn bg-navy" style="display:none"><span class="fa fa-start"></span> Start</button>
                         <button type="button" name="button" id="reset" class="btn bg-navy" style="margin-left:10px;"><span class="fa fa-refresh"></span> Reset</button>
                       </div>
                     </div>
@@ -371,14 +371,16 @@
             $('#destinations-count').html(nodes.length);
             $(this).children('option:selected').hide();
             $(this).prop('disabled',true);
-            if (nodes.length >= 1) {
-              // $('.plus').show();
-              // $('.minus').show();
+            if (nodes.length > 0) {
               $(this).closest('.form-inline').prevAll().find('button.plus').hide();
               $(this).closest('.form-inline').prevAll().find('button.minus').hide();
               $(this).closest('.form-inline').find('button.plus').show();
               $(this).closest('.form-inline').find('button.minus').show();
             }
+            if (nodes.length >= 3) {
+                document.getElementById("start").style.display = "block";
+            }
+
         });
     }
 
@@ -699,6 +701,7 @@
     $(document).on('click','.plus',function(){
       var elem = $(this).closest('.form-inline');
       var kotake = parseInt($(this).closest('.form-inline').find('.kotake').html().replace('Kota ',''));
+      var elem2 = document.getElementById("start");
       $('#pilihkota').append(elem.clone()).html();
       elem.find('button.minus').hide();
       elem.find('button.plus').hide();
@@ -709,8 +712,15 @@
       elem.next().find('.kotake').html('Kota '+parseInt(kotake+1));
       elem.next().find('.kota').prop('disabled',false);
       $(this).closest('div.col-md-2').hide();
+      if (nodes.length >= 3) {
+          elem2.style.display = "block";
+        } else if (nodes.length < 3) {
+          elem2.style.display = "none";
+        }
+
     }).on('click','.minus', function(){
       var index = $(this).closest('.form-inline').index();
+      var elem2 = document.getElementById("start");
       if(index == 0){
         $(this).closest('.form-inline').find('.kota').prop('disabled',false);
         $(this).closest('.form-inline').find('button.plus').hide();
@@ -725,12 +735,22 @@
       markers[index].setMap(null);
       markers.splice(index,1);
       nodes.splice(index,1);
+      $('#destinations-count').html(nodes.length);
+      if (nodes.length >= 3) {
+          elem2.style.display = "block";
+        } else if (nodes.length < 3) {
+          elem2.style.display = "none";
+        }
     }).on('click','#reset', function(){
       var elem = $('#pilihkota div').first();
       $('option').show();
       $('.kota').prop('disabled',false);
       $('.kota').children('option:eq(0)').prop('selected',true);
       $('#pilihkota').empty().append(elem);
+      $('#result').empty();
+      $('#result2').empty();
+      $('#result3').empty();
+      $('#result4').empty();
       $('#pilihkota div').first().find('div.col-md-2').show();
       clearMap();
     }).on('click','#start', function(){
