@@ -606,6 +606,7 @@
     var prevNodes = [];
     var markers = [];
     var jarak = [];
+    var rute = [];
     // Initialize google maps
     function initializeMap() {
         // Map options
@@ -715,24 +716,28 @@
         kromosom.push(kota[0]);
         pop.push(kromosom);
       }
-      console.log(pop);
-      this.getjarak();
-      console.log(jarak);
+      $.when(this.getjarak()).done(function(x){
+        console.log(jarak[0]);
+      })
     };
 
     function getjarak(){
+      var d1 = $.Deferred();
       for (var i = 0; i < pop.length; i++) {
         for (var j = 0; j < kota.length; j++) {
           var start = nodes[kota.indexOf(pop[i][j])];
           var end = nodes[kota.indexOf(pop[i][j+1])];
+          rute.push(pop[i][j]+'-'+pop[i][j+1]);
           calculateDistances(start,end,function(rs){
             jarak.push(rs);
+            d1.resolve(console.log(jarak));
           });
         }
       }
+      return d1.promise();
     }
 
-    function calculateDistances(start, end, fn) {
+    function  calculateDistances(start, end, fn) {
       var service = new google.maps.DistanceMatrixService();
       service.getDistanceMatrix(
       {
