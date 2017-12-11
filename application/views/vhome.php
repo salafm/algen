@@ -305,246 +305,6 @@
     <!-- <script src="//cdn.datatables.net/buttons/1.4.2/js/buttons.print.min.js"></script> -->
     <script src="<?=base_url()?>assets/js/charts-home.js"></script>
     <script src="<?=base_url()?>assets/js/front.js"></script>
-    <script type="text/javascript">
-      // var arrayjarak = new Array();
-      // var populasi = new Array();
-      // var repro = new Array();
-      // var mutasi = new Array();
-      // var generasi = new Array();
-      // var fitness = new Array();
-      // var roullete = new Array();
-      // var counter = 0;
-      // var result2 = '';
-
-      arrayjarak['A-B'] = 450;
-      arrayjarak['A-C'] = 450;
-      arrayjarak['A-D'] = 132;
-      arrayjarak['A-E'] = 321;
-      arrayjarak['B-C'] = 151;
-      arrayjarak['B-D'] = 521;
-      arrayjarak['B-E'] = 762;
-      arrayjarak['C-D'] = 522;
-      arrayjarak['C-E'] = 763;
-      arrayjarak['D-E'] = 328;
-
-      function initIndividu(){
-        var text = "A-";
-        var possible = "BCDE";
-
-        for (var i = 0; i < 4; i++){
-          var temp = possible.charAt(Math.floor(Math.random() * possible.length));
-          text = text+temp+'-';
-          possible = possible.replace(temp,'');
-        }
-        text+='A';
-        return text;
-      }
-
-      function swapStr(str, first, last){
-          return str.substr(0, first)
-                 + str[last]
-                 + str.substring(first+1, last)
-                 + str[first]
-                 + str.substr(last+1);
-      }
-
-      function random(str){
-        return parseInt(Math.round(Math.random()*(str.length-1)));
-      }
-
-      function totaljarak(str,j) {
-        var k = j;
-        var jarak = arrayjarak[str.substring(k,k+3)];
-        if(jarak === undefined){
-          jarak = arrayjarak[str.substring(k,k+3).split('').reverse().join('')];
-        }
-        return jarak;
-      }
-
-      function roulettewheel(parent,child) {
-        var sum = 0;
-        var sum2 = 0;
-        var teks = '';
-        var teks2 = '';
-
-        for (var i = 0; i < parent.length; i++) {
-          generasi[i] = parent[i];
-        }
-
-        for (var i = 0; i < child.length; i++) {
-          generasi[i+parent.length] = child[i];
-        }
-
-        for (var i = 0; i < generasi.length; i++) {
-          var jaraktotal = 0;
-          for (var j = 0; j <= 8; j=j+2) {
-            jarak = totaljarak(generasi[i],j);
-            jaraktotal += jarak;
-          }
-          sum += 1/jaraktotal;
-          fitness[i] = 1/jaraktotal;
-        }
-
-        for (var key in fitness) {
-          roullete[key] = parseFloat((fitness[key]/sum).toFixed(3));
-          sum2 += roullete[key];
-          roullete[key] = sum2;
-        }
-
-        for (var i = 0; i < 6; i++) {
-          var random = Math.random();
-          var key;
-          switch (true) {
-            case (random > 0 && random <= roullete[0]):
-              key = 0;
-              break;
-            case (random > roullete[0] && random <= roullete[1]):
-              key = 1;
-              break;
-            case (random > roullete[1] && random <= roullete[2]):
-              key = 2;
-              break;
-            case (random > roullete[2] && random < roullete[3]):
-              key = 3;
-              break;
-            case (random > roullete[3] && random < roullete[4]):
-              key = 4;
-              break;
-            case (random > roullete[4] && random < roullete[5]):
-              key = 5;
-              break;
-            case (random > roullete[5] && random < roullete[6]):
-              key = 6;
-              break;
-            case (random > roullete[6] && random < roullete[7]):
-              key = 7;
-              break;
-            case (random > roullete[7] && random < roullete[8]):
-              key = 8;
-              break;
-            case (random > roullete[8] && random < roullete[9]):
-              key = 9;
-              break;
-            case (random > roullete[9] && random < roullete[10]):
-              key = 10;
-              break;
-            case (random > roullete[10] && random < roullete[11]):
-              key = 11;
-              break;
-          }
-          for (var b = 0; b <= 11; b++) {
-            if(b == key){
-              if(b > 5){
-                var c = b-5;
-                var no = 'P\''+c;
-              }else {
-                var d = b+1;
-                var no = 'P'+parseInt(d);
-              }
-            }
-          }
-          populasi[i] = generasi[key];
-          var kromosom = 0;
-          var kalimat = '';
-          var fx = 0;
-          for (var j = 0; j <= 8; j=j+2) {
-            jarak = totaljarak(populasi[i],j);
-            kalimat += jarak+' ';
-            kromosom += jarak;
-            fx += 1/jarak;
-          };
-          teks += '<tr><td>P'+parseInt(i+1)+'</td><td>'+no+'</td><td>'+populasi[i]+'</td><td>'+kromosom+'&nbsp; KM </td><td>'+fx+'</td></tr>';
-          teks2 += '<tr><td>P'+parseInt(i+1)+'</td><td>'+populasi[i]+'</td><td>'+kromosom+'&nbsp; KM </td><td>'+fx+'</td></tr>';
-        }
-        header = '<table class="table table-bordered" id="myTable"> <thead><th>Parent</th>  <th>Offspring to Parent</th> <th>Kromosom</th> <th>Jarak</th> <th>Fitness</th></thead><tbdoy>';
-        footer = '</tbdoy></table>'
-        result2 = teks2;
-        $('#seleksihasil').html(header+teks+footer);
-        $('#myTable').DataTable({
-          paging:false,
-          searching:false,
-          info:false,
-        });
-      }
-
-      $('#initpop').click(function(){
-        var result = '';
-        var result3 = '';
-        var header = '';
-        for (var i = 0; i < 6; i++) {
-          populasi[i] = initIndividu();
-          var m = i+1;
-          var kromosom = 0;
-          var kalimat = '';
-          var fitness = 0;
-          for (var j = 0; j <= 8; j=j+2) {
-            jarak = totaljarak(populasi[i],j);
-            kalimat += jarak+' ';
-            kromosom += jarak;
-            fitness += 1/jarak;
-          };
-
-          result += '<tr><td>P'+m+'</td><td> '+populasi[i]+'</td><td>'+kromosom+'&nbsp; KM </td><td>'+fitness+'</td></tr>';
-          result2 = result;
-        }
-        header = '<table class="table table-bordered"> <th>Parent</th> <th>Kromosom</th> <th>Jarak</th> <th>Fitness</th>';
-        footer = '</table>'
-        $('#result').html(header+result+footer);
-        $(this).hide();
-      });
-
-      $('#Reproduksi').click(function(){
-        var hasil = '';
-        counter++;
-        for (var i = 0; i < populasi.length; i++) {
-          repro[i] = populasi[i];
-          var m = i+1;
-          repro[i] = repro[i].replace('A','');
-          repro[i] = repro[i].replace('A','');
-          repro[i] = String(repro[i].replace(/-/g,''));
-          var satu = random(repro[i]);
-          var dua = random(repro[i]);
-          while (dua == satu) {
-            dua = random(repro[i]);
-          }
-          if(dua < satu){
-            var temp = dua;
-            dua = satu;
-            satu = temp;
-          }
-          repro[i] = swapStr(repro[i],satu,dua);
-          mutasi[i] = 'A-';
-          for (var j = 0; j < repro[i].length; j++) {
-            mutasi[i] += repro[i][j]+'-';
-          }
-          mutasi[i] += 'A';
-          var kromosom = 0;
-          var kalimat = '';
-          var fitness = 0;
-          for (var j = 0; j <= 8; j=j+2) {
-            jarak = totaljarak(mutasi[i],j);
-            kalimat += jarak+' ';
-            kromosom += jarak;
-            fitness += 1/jarak;
-          };
-          hasil += '<tr><td>P\''+m+'</td><td> '+populasi[i]+'</td><td>'+kromosom+'&nbsp; KM </td><td>'+fitness+'</td></tr>';
-          header = '<table class="table table-bordered"> <th>Parent</th> <th>Kromosom</th> <th>Jarak</th> <th>Fitness</th>';
-          footer = '</table>'
-        }
-        $('#hasil').html(header+hasil+footer);
-        $('#gen').html(header+result2+hasil+footer);
-        $(this).hide();
-        $('#nama_gen').html('Generasi Ke-'+counter);
-        $('#seleksi').show();
-      });
-
-      $('#seleksi').click(function(){
-        roulettewheel(populasi,mutasi);
-        $('#Reproduksi').show();
-        $(this).hide();
-      });
-    </script>
-
     //gmaps
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwW5b1RmYGIJIg1OWr00VUAgEUB4n_oP8&callback=initMap"></script>
     <script type="text/javascript">
@@ -560,6 +320,7 @@
     var jarak = [];
     var rute = [];
     var distance = [];
+    var fitnessess = [];
     // Initialize google maps
     function initializeMap() {
         // Map options
@@ -655,8 +416,8 @@
     }
 
     function initpop(){
-      var jmlpop = 5;
-      for (var i = 0; i < 5; i++) {
+      var jmlpop = 6;
+      for (var i = 0; i < jmlpop; i++) {
         var kromosom = [];
         kromosom.push(kota[0]);
         var kota2 = kota.slice(0);
@@ -669,20 +430,6 @@
         kromosom.push(kota[0]);
         pop.push(kromosom);
       }
-
-      $.when(this.getjarak()).done(function(x){
-        for (var i = 0; i < rute.length; i++) {
-          // console.log('fullpath :('+i+')'+rute[i]);
-          var city = rute[i].split('-');
-          for (var index in jarak) {
-            var addr = index.split('*');
-            if(addr[0].includes(city[0]) && addr[1].includes(city[1])){
-              distance[rute[i]] = jarak[index];
-            }
-            // console.log(index+' : '+jarak[index]);
-          }
-        }
-      });
     };
 
     function getjarak(){
@@ -712,7 +459,7 @@
         avoidTolls: false
       }, function callback(response, status) {
         if (status!==google.maps.DistanceMatrixStatus.OK) {
-        _googleError('Error was: ' + status);
+        alert('Error was: ' + status);
         } else {
           var origins = response.originAddresses;
           var destination = response.destinationAddresses;
@@ -728,10 +475,106 @@
 
     function ga(){
       initpop();
-      for (var i = 0; i < pop.length; i++) {
-        $('#result').append(pop[i]+'<br>');
-        $('#result2').append(pop[i]+'<br>');
+      $.when(this.getjarak()).done(function(x){
+        for (var i = 0; i < rute.length; i++) {
+          // console.log('fullpath :('+i+')'+rute[i]);
+          rute[i] = rute[i].replace('Surabaya','SBY');
+          var city = rute[i].split('-');
+          for (var index in jarak) {
+            var addr = index.split('*');
+            if(addr[0].includes(city[0]) && addr[1].includes(city[1])){
+              distance[rute[i]] = jarak[index];
+            }else{
+              console.log(city+' google error');
+            }
+            // console.log(index+' : '+jarak[index]);
+          }
+        }
+
+        for (var index in distance) {
+          // console.log(index+' : '+distance[index]);
+        }
+
+        var table = '<table width="100%" class="table table-bordered"><tr><th>Nomor</th><th>Parent</th><th>Rute</th><th>Jarak</th><th>Fitness</th></tr>';
+        for (var i = 0; i < pop.length; i++) {
+          var fitness = 0;
+          for (var j = 0; j < pop[i].length-1; j++) {
+            var rute1 = pop[i][j].replace('Surabaya','SBY');
+            var rute2 = pop[i][j+1].replace('Surabaya','SBY');
+            var index = rute1+'-'+rute2;
+            fitness += distance[index];
+            fitnessess[i] = fitness;
+          }
+
+          table += '<tr><td>'+parseInt(i+1)+'</td><td>Parent'+parseInt(i+1)+'</td><td>'+pop[i]+'</td><td>'+fitness.toFixed(3)+'</td><td>'+1/fitness+'</td></tr>'
+        }
+        table += '</table>';
+        $('#result').html(table);
+
+        this.crossover(fitnessess);
+      });
+    }
+
+    var popc = [];
+    var parent = [];
+    var kum = [];
+    function roullete(arr){
+      var sum = 0;
+      var sum2 = 0;
+      for (var i = 0; i < arr.length; i++) {
+        var fitnes = 1/arr[i]
+        sum += fitnes;
       }
+
+      for (var i = 0; i < arr.length; i++) {
+        sum2 = sum2 + ((1/arr[i])/sum)*100;
+        kum[i] = sum2;
+      }
+
+      while (parent[0] == parent[1]) {
+        for (var i = 0; i < 2; i++) {
+          var random = Math.random()*100;
+          for (var j = 0; j < arr.length-1; j++) {
+            if(random > kum[j] && random <= kum[j+1]){
+              parent[i] = (j+1);
+            }else if(random <= kum[0]){
+              parent[i] = (0);
+            }else if(random > kum[arr.length-1]){
+              parent[i] = (arr.length-1);
+            }
+          }
+        }
+      }
+
+      if(parent[0] > parent[1]){
+        var temp = parent[1];
+        parent[1] = parent[0];
+        parent[0] = temp;
+      }
+    }
+
+    function crossover(arr){
+      this.roullete(arr);
+      console.log(parent);
+      console.log(arr);
+      arr.splice(parent[0],1);
+      arr.splice(parent[1]-1,1);
+      console.log(arr);
+      console.log(arr.length);
+      this.roullete(arr);
+      console.log(parent);
+      console.log(arr);
+      arr.splice(parent[0],1);
+      arr.splice(parent[1]-1,1);
+      console.log(arr);
+      console.log(arr.length);
+      this.roullete(arr);
+      console.log(parent);
+      console.log(arr);
+      arr.splice(parent[0],1);
+      arr.splice(parent[1]-1,1);
+      console.log(arr);
+      console.log(arr.length);
     }
 
     $(document).on('click','.plus',function(){
