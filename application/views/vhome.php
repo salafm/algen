@@ -264,8 +264,12 @@
                       <h3 class="h4">Populasi Awal</h3>
                     </div>
                     <div class="card-body">
+                      <div class="col-lg-6">Populasi</div>
                       <div id="result" class="col-lg-6"></div>
+                      <div class="col-lg-6">Crossover</div>
                       <div id="result2" class="col-lg-6"></div>
+                      <div class="col-lg-6">Mutasi</div>
+                      <div id="result3" class="col-lg-6"></div>
                     </div>
                   </div>
                 </div>
@@ -321,6 +325,10 @@
     var rute = [];
     var distance = [];
     var fitnessess = [];
+    var dfitnessess = [];
+    var mfitnessess = [];
+    var opfitnessess = [];
+    var jmlpop;
     // Initialize google maps
     function initializeMap() {
         // Map options
@@ -415,7 +423,7 @@
     }
 
     function initpop(){
-      var jmlpop = 6;
+      jmlpop = 6;
       for (var i = 0; i < jmlpop; i++) {
         var kromosom = [];
         kromosom.push(kota[0]);
@@ -474,7 +482,6 @@
 
     function ga(){
       initpop();
-<<<<<<< HEAD
       $.when(this.getjarak()).done(function(x){
         for (var i = 0; i < rute.length; i++) {
           // console.log('fullpath :('+i+')'+rute[i]);
@@ -485,14 +492,14 @@
             if(addr[0].includes(city[0]) && addr[1].includes(city[1])){
               distance[rute[i]] = jarak[index];
             }else{
-              console.log(city+' google error');
+              // console.log(city+' google error');
             }
-            // console.log(index+' : '+jarak[index]);
+            //console.log(index+' : '+jarak[index]);
           }
         }
 
         for (var index in distance) {
-          // console.log(index+' : '+distance[index]);
+          console.log(index+' : '+distance[index]);
         }
 
         var table = '<table width="100%" class="table table-bordered"><tr><th>Nomor</th><th>Parent</th><th>Rute</th><th>Jarak</th><th>Fitness</th></tr>';
@@ -504,6 +511,8 @@
             var index = rute1+'-'+rute2;
             fitness += distance[index];
             fitnessess[i] = fitness;
+            dfitnessess[i] = fitness;
+            mfitnessess[i] = fitness;
           }
 
           table += '<tr><td>'+parseInt(i+1)+'</td><td>Parent'+parseInt(i+1)+'</td><td>'+pop[i]+'</td><td>'+fitness.toFixed(3)+'</td><td>'+1/fitness+'</td></tr>'
@@ -511,28 +520,54 @@
         table += '</table>';
         $('#result').html(table);
 
-        this.crossover(fitnessess);
+
+        this.crossover(dfitnessess);
+        var table = '<table width="100%" class="table table-bordered"><tr><th>Nomor</th><th>Offspring</th><th>Rute</th><th>Jarak</th><th>Fitness</th></tr>';
+        for (var i = 0; i < offspring.length; i++) {
+          var fitness = 0;
+          for (var j = 0; j < offspring[i].length-1; j++) {
+            var rute1 = offspring[i][j].replace('Surabaya','SBY');
+            var rute2 = offspring[i][j+1].replace('Surabaya','SBY');
+            var index = rute1+'-'+rute2;
+            fitness += distance[index];
+            opfitnessess[i] = fitness;
+          }
+
+          table += '<tr><td>'+parseInt(i+1)+'</td><td>Offspring'+parseInt(i+1)+'</td><td>'+offspring[i]+'</td><td>'+fitness.toFixed(3)+'</td><td>'+1/fitness+'</td></tr>'
+        }
+        table += '</table>';
+        $('#result2').html(table);
+
+        var mutasi = [];
+        mutasi.push(this.mutasi(mfitnessess));
+        var table = '<table width="100%" class="table table-bordered"><tr><th>Nomor</th><th>Offspring</th><th>Rute</th><th>Jarak</th><th>Fitness</th></tr>';
+        for (var i = 0; i < mutasi.length; i++) {
+          var fitness = 0;
+          for (var j = 0; j < mutasi[i].length-1; j++) {
+            var rute1 = mutasi[i][j].replace('Surabaya','SBY');
+            var rute2 = mutasi[i][j+1].replace('Surabaya','SBY');
+            var index = rute1+'-'+rute2;
+            fitness += distance[index];
+            opfitnessess[i+offspring.length] = fitness;
+          }
+
+          table += '<tr><td>'+parseInt(i+1)+'</td><td>Offspring'+parseInt(i+1)+'</td><td>'+mutasi[i]+'</td><td>'+fitness.toFixed(3)+'</td><td>'+1/fitness+'</td></tr>'
+        }
+        table += '</table>';
+        $('#result3').html(table);
       });
     }
 
-    var popc = [];
     var parent = [];
     var kum = [];
+    var offspring = [];
     function roullete(arr){
+      parent = [0,0];
       var sum = 0;
       var sum2 = 0;
       for (var i = 0; i < arr.length; i++) {
         var fitnes = 1/arr[i]
         sum += fitnes;
-=======
-      if (nodes.length <= 1 ) {
-          alert('Kita ga kemana mana');
-          return;
-      }
-      for (var i = 0; i < pop.length; i++) {
-        $('#result').append(pop[i]+'<br>');
-        $('#result2').append(pop[i]+'<br>');
->>>>>>> 165ed47453dd9355dc27dec781f54a0a590b7592
       }
 
       for (var i = 0; i < arr.length; i++) {
@@ -563,27 +598,66 @@
     }
 
     function crossover(arr){
+      var popc = pop.slice(0);
+      for (var i = 0; i < jmlpop/2; i++) {
+        this.roullete(arr);
+        var p1 = popc[parent[0]].slice(0);
+        var p2 = popc[parent[1]].slice(0);
+        var awal = p1[0];
+        var op1 = [];
+        var op2 = [];
+        p1.splice(0,1);
+        p2.splice(0,1);
+        p1.splice(p1.length-1,1);
+        p2.splice(p2.length-1,1);
+        op1[1] = p2[1].slice(0);
+        op2[1] = p1[1].slice(0);
+        for (var j = 0; j < p1.length; j++) {
+          var indeks = (j+2)%p1.length;
+          for (var k = 0; k < p1.length; k++) {
+            var index = (k+indeks)%p1.length;
+            if(!(op1.includes(p1[index]))){
+              op1[indeks] = p1[index];
+            }
+          }
+        }
+        op1.splice(0,0,awal);
+        op1.push(awal);
+        offspring.push(op1);
+        for (var j = 0; j < p2.length; j++) {
+          var indeks = (j+2)%p2.length;
+          for (var k = 0; k < p2.length; k++) {
+            var index = (k+indeks)%p2.length;
+            if(!(op2.includes(p2[index]))){
+              op2[indeks] = p2[index];
+            }
+          }
+        }
+        offspring.push(op2);
+        op2.splice(0,0,awal);
+        op2.push(awal);
+        arr.splice(parent[0],1);
+        arr.splice((parent[1]-1),1);
+      }
+    }
+
+    function mutasi(arr){
+      var popm = pop.slice(0);
       this.roullete(arr);
-      console.log(parent);
-      console.log(arr);
-      arr.splice(parent[0],1);
-      arr.splice(parent[1]-1,1);
-      console.log(arr);
-      console.log(arr.length);
-      this.roullete(arr);
-      console.log(parent);
-      console.log(arr);
-      arr.splice(parent[0],1);
-      arr.splice(parent[1]-1,1);
-      console.log(arr);
-      console.log(arr.length);
-      this.roullete(arr);
-      console.log(parent);
-      console.log(arr);
-      arr.splice(parent[0],1);
-      arr.splice(parent[1]-1,1);
-      console.log(arr);
-      console.log(arr.length);
+      var random = parseInt(Math.random()*2);
+      var p1 = popm[parent[1]].slice(0);
+      var awal = p1[0];
+      var op1 = [];
+      p1.splice(0,1);
+      p1.splice(p1.length-1,1);
+      var ind1 = this.random(p1);
+      var ind2 = this.random(p1);
+      var temp = p1[ind1];
+      p1[ind1] = p1[ind2];
+      p1[ind2] = temp;
+      p1.splice(0,0,awal);
+      p1.push(awal);
+      return p1;
     }
 
     $(document).on('click','.plus',function(){
