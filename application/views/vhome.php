@@ -236,7 +236,7 @@
                                 <option value="-6.90389, 107.61861">Bandung</option>
                                 <option value="-6.59444, 106.78917">Bogor</option>
                                 <option value="-6.21462, 106.84513">Jakarta</option>
-                                <option value="-7.78278, 110.36083">Jogjakarta</option>
+                                <option value="-7.78278, 110.36083">Yogyakarta</option>
                                 <option value="-7.81667, 112.01667">Kediri</option>
                                 <option value="-6.8886, 109.6753">Pekalongan</option>
                                 <option value="-6.9932, 110.4203">Semarang</option>
@@ -258,62 +258,14 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-12">
                   <div class="card">
                     <div class="card-header d-flex align-items-center">
                       <h3 class="h4">Populasi Awal</h3>
                     </div>
                     <div class="card-body">
-                      <div id="result">
-
-                      </div>
-                      <br>
-                      <a class="btn text-dark" id="initpop">Init Populasi</a>
-                    </div>
-                  </div>
-                </div>
-                <!-- Horizontal Form-->
-                <div class="col-lg-6">
-                  <div class="card">
-                    <div class="card-header d-flex align-items-center">
-                      <h3 class="h4">Hasil Reproduksi</h3>
-                    </div>
-                    <div class="card-body">
-                      <div id="hasil">
-
-                      </div>
-                      <br>
-                      <a class="btn text-dark" id="Reproduksi">Reproduksi</a>
-                    </div>
-                  </div>
-                </div>
-                <!-- Horizontal Form-->
-                <div class="col-lg-6">
-                  <div class="card">
-                    <div class="card-header d-flex align-items-center">
-                      <h3 class="h4" id="nama_gen">Generasi Baru</h3>
-                    </div>
-                    <div class="card-body">
-                      <div id="gen">
-
-                      </div>
-                      <br>
-                      <a class="btn text-dark" id="seleksi">Seleksi</a>
-                    </div>
-                  </div>
-                </div>
-                <!-- Horizontal Form-->
-                <div class="col-lg-6">
-                  <div class="card">
-                    <div class="card-header d-flex align-items-center">
-                      <h3 class="h4">Hasil Seleksi</h3>
-                    </div>
-                    <div class="card-body">
-                      <div id="seleksihasil">
-
-                      </div>
-                      <br>
-                      <!-- <a class="btn text-dark" id="sorting">Sorting</a> -->
+                      <div id="result" class="col-lg-6"></div>
+                      <div id="result2" class="col-lg-6"></div>
                     </div>
                   </div>
                 </div>
@@ -607,6 +559,7 @@
     var markers = [];
     var jarak = [];
     var rute = [];
+    var distance = [];
     // Initialize google maps
     function initializeMap() {
         // Map options
@@ -715,9 +668,20 @@
         kromosom.push(kota[0]);
         pop.push(kromosom);
       }
+
       $.when(this.getjarak()).done(function(x){
-        console.log(jarak[0]);
-      })
+        for (var i = 0; i < rute.length; i++) {
+          // console.log('fullpath :('+i+')'+rute[i]);
+          var city = rute[i].split('-');
+          for (var index in jarak) {
+            var addr = index.split('*');
+            if(addr[0].includes(city[0]) && addr[1].includes(city[1])){
+              distance[rute[i]] = jarak[index];
+            }
+            // console.log(index+' : '+jarak[index]);
+          }
+        }
+      });
     };
 
     function getjarak(){
@@ -728,8 +692,8 @@
           var end = nodes[kota.indexOf(pop[i][j+1])];
           rute.push(pop[i][j]+'-'+pop[i][j+1]);
           calculateDistances(start,end,function(rs){
-            jarak.push(rs);
-            d1.resolve(console.log(jarak));
+            var index = rs[1]+'*'+rs[2];
+            d1.resolve(jarak[index] = rs[0]);
           });
         }
       }
@@ -750,14 +714,23 @@
         _googleError('Error was: ' + status);
         } else {
           var origins = response.originAddresses;
+          var destination = response.destinationAddresses;
           for (var i = 0; i < origins.length; i++) {
             var results = response.rows[i].elements;
             for (var j = 0; j < results.length; j++) {
-              fn(results[j].distance.value/1000);
+              fn([results[j].distance.value/1000, origins[i], destination[i]]);
             }
           }
         }
       });
+    }
+
+    function ga(){
+      initpop();
+      for (var i = 0; i < pop.length; i++) {
+        $('#result').append(pop[i]+'<br>');
+        $('#result2').append(pop[i]+'<br>');
+      }
     }
 
     $(document).on('click','.plus',function(){
@@ -798,7 +771,7 @@
       $('#pilihkota div').first().find('div.col-md-2').show();
       clearMap();
     }).on('click','#start', function(){
-      initpop();
+      ga();
     });
     </script>
   </body>
