@@ -654,7 +654,6 @@
               $(this).closest('.form-inline').find('button.plus').show();
               $(this).closest('.form-inline').find('button.minus').show();
             }
-
         });
     }
 
