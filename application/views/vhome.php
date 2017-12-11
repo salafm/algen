@@ -270,6 +270,8 @@
                       <div id="result2" class="col-lg-6"></div>
                       <div class="col-lg-6">Mutasi</div>
                       <div id="result3" class="col-lg-6"></div>
+                      <div class="col-lg-6">Seleksi</div>
+                      <div id="result4" class="col-lg-6"></div>
                     </div>
                   </div>
                 </div>
@@ -328,6 +330,7 @@
     var dfitnessess = [];
     var mfitnessess = [];
     var opfitnessess = [];
+    var seleksi = [];
     var jmlpop;
     // Initialize google maps
     function initializeMap() {
@@ -499,7 +502,7 @@
         }
 
         for (var index in distance) {
-          console.log(index+' : '+distance[index]);
+          // console.log(index+' : '+distance[index]);
         }
 
         var table = '<table width="100%" class="table table-bordered"><tr><th>Nomor</th><th>Parent</th><th>Rute</th><th>Jarak</th><th>Fitness</th></tr>';
@@ -510,10 +513,10 @@
             var rute2 = pop[i][j+1].replace('Surabaya','SBY');
             var index = rute1+'-'+rute2;
             fitness += distance[index];
-            fitnessess[i] = fitness;
-            dfitnessess[i] = fitness;
-            mfitnessess[i] = fitness;
           }
+          dfitnessess[i] = fitness;
+          mfitnessess[i] = fitness;
+          seleksi.push(pop[i]);
 
           table += '<tr><td>'+parseInt(i+1)+'</td><td>Parent'+parseInt(i+1)+'</td><td>'+pop[i]+'</td><td>'+fitness.toFixed(3)+'</td><td>'+1/fitness+'</td></tr>'
         }
@@ -530,8 +533,8 @@
             var rute2 = offspring[i][j+1].replace('Surabaya','SBY');
             var index = rute1+'-'+rute2;
             fitness += distance[index];
-            opfitnessess[i] = fitness;
           }
+          seleksi.push(offspring[i]);
 
           table += '<tr><td>'+parseInt(i+1)+'</td><td>Offspring'+parseInt(i+1)+'</td><td>'+offspring[i]+'</td><td>'+fitness.toFixed(3)+'</td><td>'+1/fitness+'</td></tr>'
         }
@@ -548,13 +551,46 @@
             var rute2 = mutasi[i][j+1].replace('Surabaya','SBY');
             var index = rute1+'-'+rute2;
             fitness += distance[index];
-            opfitnessess[i+offspring.length] = fitness;
           }
+          seleksi.push(mutasi[i]);
 
           table += '<tr><td>'+parseInt(i+1)+'</td><td>Offspring'+parseInt(i+1)+'</td><td>'+mutasi[i]+'</td><td>'+fitness.toFixed(3)+'</td><td>'+1/fitness+'</td></tr>'
         }
         table += '</table>';
         $('#result3').html(table);
+
+        for (var i = 0; i < seleksi.length; i++) {
+          var fitness = 0;
+          for (var j = 0; j < seleksi[i].length-1; j++) {
+            var rute1 = seleksi[i][j].replace('Surabaya','SBY');
+            var rute2 = seleksi[i][j+1].replace('Surabaya','SBY');
+            var index = rute1+'-'+rute2;
+            fitness += distance[index];
+          }
+          fitnessess[i] = fitness;
+        }
+
+        var selection = [];
+        for (var i = 0; i < seleksi.length; i++) {
+          selection.push({
+              "rute"  : seleksi[i],
+              "jarak" : fitnessess[i]
+          });
+        }
+        selection.sort(function(a, b){
+            return a.jarak - b.jarak;
+        });
+
+        var table = '<table width="100%" class="table table-bordered"><tr><th>Nomor</th><th>Individu</th><th>Rute</th><th>Jarak</th><th>Fitness</th></tr>';
+        for (var i = 0; i < selection.length; i++) {
+          table += '<tr><td>'+parseInt(i+1)+'</td><td>Individu'+parseInt(i+1)+'</td><td>'+selection[i].rute+'</td><td>'+(selection[i].jarak).toFixed(3)+'</td><td>'+(1/selection[i].jarak)+'</td></tr>'
+        }
+        table += '</table>';
+        $('#result4').html(table);
+
+        for (var i = 0; i < pop.length; i++) {
+          pop[i] = selection[i].rute;
+        }
       });
     }
 
