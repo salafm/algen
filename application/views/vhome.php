@@ -186,14 +186,9 @@
                                   <div class="input-group col-md-12">
                                     <select class="maxgen form-control" id="generations">
                                       <option value="2">2</option>
-                                      <option value="3">3</option>
+                                      <option value="3" selected>3</option>
                                       <option value="4">4</option>
-                                      <option value="5" selected>5</option>
-                                      <option value="6">6</option>
-                                      <option value="7">7</option>
-                                      <option value="8">8</option>
-                                      <option value="9">9</option>
-                                      <option value="10">10</option>
+                                      <option value="5">5</option>
                                     </select>
                                     </div>
                                 </td>
@@ -283,6 +278,10 @@
     var kum = [];
     var offspring = [];
     var jmlpop;
+    var gen;
+    var pc;
+    var pm;
+    var elemen;
     // Initialize google maps
     function initializeMap(){
         // Map options
@@ -432,10 +431,6 @@
     }
 
     function ga(){
-      var gen = $('#generations').val();
-      var pc = $('#crossover-rate').val();
-      var pm = $('#mutation-rate').val();
-      var elem = $('.rs');
       initpop();
       $.when(this.getjarak()).done(function(x){
         for (var i = 0; i < rute.length; i++) {
@@ -447,20 +442,22 @@
             if(addr[0].includes(city[0]) && addr[1].includes(city[1])){
               distance[rute[i]] = jarak[index];
             }else{
-              // console.log(city+' google error');
+              // distance[rute[i]] = 0;
             }
             //console.log(index+' : '+jarak[index]);
           }
         }
 
+        var no = 1;
         for (var index in distance) {
-          // console.log(index+' : '+distance[index]);
-        }
+          console.log('array('+no+')'+index+' : '+distance[index]);
+          no++;
+        } 
 
         for (var iter = 0; iter < gen; iter++) {
           var root;
           if(iter > 0){
-            $('#ga').append(elem.clone()).html();
+            $('#ga').append(elemen.clone()).html();
           }
           $('div.rs:eq('+iter+')').find('h3.titel').html('Generasi '+(parseInt(iter+1)));
         }
@@ -517,10 +514,9 @@
           var rute2 = pop[i][j+1].replace('Surabaya','SBY');
           var index = rute1+'-'+rute2;
           fitness += distance[index];
-          console.log(fitness);
           if(isNaN(fitness)){
-            alert('Kesalahan gmaps. Jarak ada yg tidak terhitung');
-            location.reload();
+            console.log('parent:'+index);
+            return;
           }
         }
         dfitnessess[i] = fitness;
@@ -544,7 +540,11 @@
             var rute2 = offspring[i][j+1].replace('Surabaya','SBY');
             var index = rute1+'-'+rute2;
             fitness += distance[index];
-            console.log(fitness);
+            fitness.toFixed(3);
+            if(isNaN(fitness)){
+              console.log('crossover:'+index);
+              return;
+            }
           }
           seleksi.push(offspring[i]);
 
@@ -570,7 +570,11 @@
             var rute2 = mutasi[i][j+1].replace('Surabaya','SBY');
             var index = rute1+'-'+rute2;
             fitness += distance[index];
-            console.log(fitness);
+            fitness.toFixed(3);
+            if(isNaN(fitness)){
+              console.log('mutasi:'+index);
+              return;
+            }
           }
           seleksi.push(mutasi[i]);
 
@@ -591,6 +595,11 @@
           var rute2 = seleksi[i][j+1].replace('Surabaya','SBY');
           var index = rute1+'-'+rute2;
           fitness += distance[index];
+          fitness.toFixed(3);
+          if(isNaN(fitness)){
+            console.log('seleksi:'+index);
+            return;
+          }
         }
         fitnessess[i] = fitness;
       }
@@ -774,6 +783,10 @@
       clearMap();
     }).on('click','#start', function(){
       ga();
+      gen = $('#generations').val();
+      pc = $('#crossover-rate').val();
+      pm = $('#mutation-rate').val();
+      elemen = $('.rs');
     });
     </script>
   </body>
