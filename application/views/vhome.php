@@ -97,8 +97,11 @@
                     <div class="card-header d-flex align-items-center">
                       <h3 class="h4">Hasil</h3>
                     </div>
-                    <div class="card-body" >
-                      <div id="resultfinal" class="col-lg-6"></div>
+                    <div class="card-body">
+                      <div class="col-lg-6">Rute tercepat</div>
+                      <div id="resultrute" class="col-lg-6"></div>
+                      <div class="col-lg-6">Jarak </div>
+                      <div id="resultjarak" class="col-lg-6"></div>
                     </div>
                   </div>
                 </div>
@@ -290,6 +293,7 @@
     var kum = [];
     var offspring = [];
     var jmlpop;
+    var jarax = [];
     var gen;
     var pc;
     var pm;
@@ -487,8 +491,11 @@
           this.prosesga(pop,distance,pc,pm,iter);
         }
         var haseel = pop[0];
-        var hasilakhir = '<p>'+haseel+'</p>';
-        $('div.hsl').find('div#resultfinal').html(hasilakhir);
+        var haseeljarak = jarax[0];
+        var hasilrute = '<p>'+haseel+'</p>';
+        var hasiljarak = '<p>'+haseeljarak+'</p>';
+        $('div.hsl').find('div#resultrute').html(hasilrute);
+        $('div.hsl').find('div#resultjarak').html(hasiljarak);
 
         // Add route to map
        directionsService = new google.maps.DirectionsService();
@@ -633,6 +640,7 @@
       })).done(function(x){
         for (var i = 0; i < pop.length; i++) {
           pop[i] = selection[i].rute;
+          jarax[i] = selection[i].jarak;
         }
       })
 
