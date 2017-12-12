@@ -91,6 +91,47 @@
                     </div>
                   </div>
                 </div>
+
+                <div class="col-lg-6">
+                  <div class="card">
+                    <div class="card-header d-flex align-items-center">
+                      <h3 class="h4">Setting Kota</h3>
+                    </div>
+                    <div class="card-body">
+                      <div class="" id="pilihkota">
+                        <div class="form-inline">
+                          <div class="form-group col-md-3">
+                            <div class="col-md-12 kotake">Kota 1</div>
+                          </div>
+                          <div class="form-group col-md-6">
+                            <div class="input-group col-md-12">
+                              <select class="kota form-control" name="" id="">
+                                <option value="" checked>Pilih</option>
+                                <option value="-6.90389, 107.61861">Bandung</option>
+                                <option value="-6.59444, 106.78917">Bogor</option>
+                                <option value="-6.21462, 106.84513">Jakarta</option>
+                                <option value="-7.78278, 110.36083">Yogyakarta</option>
+                                <option value="-7.81667, 112.01667">Kediri</option>
+                                <option value="-6.8886, 109.6753">Pekalongan</option>
+                                <option value="-6.9932, 110.4203">Semarang</option>
+                                <option value="-7.24917, 112.75083">Surabaya</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="form-group col-md-3">
+                            <button type="button" name="button" class="btn bg-blue plus" style="display:none"><i class="fa fa-plus"></i></button>
+                            <span style="padding-left:10px"></span>
+                            <button type="button" name="button" class="btn bg-red minus" style="display:none"><i class="fa fa-minus"></i></button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12 form-inline" style="margin-left:10px;margin-top:10px;">
+                        <button type="button" name="button" id="start" class="btn bg-navy" style="display:none"><span class="fa fa-start"></span> Start</button>
+                        <button type="button" name="button" id="reset" class="btn bg-navy" style="margin-left:10px;"><span class="fa fa-refresh"></span> Reset</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <div class="col-lg-6">
                   <div class="card">
                     <div class="card-header d-flex align-items-center">
@@ -101,44 +142,6 @@
                         <table>
                             <tr>
                                 <td colspan="2" ><b>Konfigurasi Variabel</b></td>
-                            </tr>
-                            <tr>
-                                <td>Mode Perjalanan: </td>
-                                <td>
-                                  <div class="input-group col-md-12">
-                                    <select class="mode form-control" id="travel-type">
-                                        <option value="DRIVING">Mobil</option>
-                                        <option value="BICYCLING">Sepeda</option>
-                                        <option value="WALKING">Jalan Kaki</option>
-                                    </select>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Hindari Jalan Tol: </td>
-                                <td>
-                                  <div class="input-group col-md-12">
-                                    <select class="tol form-control" id="avoid-highways">
-                                        <option value="1">Enabled</option>
-                                        <option value="0" selected="selected">Disabled</option>
-                                    </select>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Population Size: </td>
-                                <td>
-                                  <div class="input-group col-md-12">
-                                    <select class="popsize form-control" id="population-size">
-                                        <option value="5">5</option>
-                                        <option value="10">10</option>
-                                        <option value="20">20</option>
-                                        <option value="50" selected="selected">50</option>
-                                        <option value="100">100</option>
-                                        <option value="200">200</option>
-                                    </select>
-                                    </div>
-                                </td>
                             </tr>
                             <tr>
                                 <td>Mutation Rate: </td>
@@ -178,100 +181,44 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>Elitism: </td>
-                                <td>
-                                    <div class="input-group col-md-12">
-                                    <select class="elitism form-control" id="elitism">
-                                        <option value="1" selected="selected">Enabled</option>
-                                        <option value="0">Disabled</option>
-                                    </select>
-                                  </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Max Generations: </td>
+                                <td>Jumlah Generasi: </td>
                                 <td>
                                   <div class="input-group col-md-12">
                                     <select class="maxgen form-control" id="generations">
-                                        <option value="20">20</option>
-                                        <option value="50" selected="selected">50</option>
-                                        <option value="100">100</option>
+                                      <option value="2">2</option>
+                                      <option value="3">3</option>
+                                      <option value="4">4</option>
+                                      <option value="5" selected>5</option>
+                                      <option value="6">6</option>
+                                      <option value="7">7</option>
+                                      <option value="8">8</option>
+                                      <option value="9">9</option>
+                                      <option value="10">10</option>
                                     </select>
                                     </div>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2"><b>Debug Info</b></td>
-                            </tr>
-                            <tr>
-                                <td>Destinations Count: </td>
-                                <td class="input-group col-md-12" id="destinations-count">0</td>
-                            </tr>
-                            <tr class="ga-info" style="display:none;">
-                                <td>Generations: </td><td id="generations-passed">0</td>
-                            </tr>
-                            <tr class="ga-info" style="display:none;">
-                                <td>Waktu Terbaik: </td><td id="best-time">?</td>
                             </tr>
                         </table>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="col-lg-6">
-                  <div class="card">
-                    <div class="card-header d-flex align-items-center">
-                      <h3 class="h4">Setting Kota</h3>
-                    </div>
-                    <div class="card-body">
-                      <div class="" id="pilihkota">
-                        <div class="form-inline">
-                          <div class="form-group col-md-3">
-                            <div class="col-md-12 kotake">Kota 1</div>
-                          </div>
-                          <div class="form-group col-md-6">
-                            <div class="input-group col-md-12">
-                              <select class="kota form-control" name="" id="">
-                                <option value="" checked>Pilih</option>
-                                <option value="-6.90389, 107.61861">Bandung</option>
-                                <option value="-6.59444, 106.78917">Bogor</option>
-                                <option value="-6.21462, 106.84513">Jakarta</option>
-                                <option value="-7.78278, 110.36083">Yogyakarta</option>
-                                <option value="-7.81667, 112.01667">Kediri</option>
-                                <option value="-6.8886, 109.6753">Pekalongan</option>
-                                <option value="-6.9932, 110.4203">Semarang</option>
-                                <option value="-7.24917, 112.75083">Surabaya</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="form-group col-md-3">
-                            <button type="button" name="button" class="btn bg-blue plus" style="display:none"><i class="fa fa-plus"></i></button>
-                            <span style="padding-left:10px"></span>
-                            <button type="button" name="button" class="btn bg-red minus" style="display:none"><i class="fa fa-minus"></i></button>
-                          </div>
-                        </div>
+                <div id="ga" class="col-lg-12">
+                  <div class="col-lg-12 rs">
+                    <div class="card">
+                      <div class="card-header d-flex align-items-center">
+                        <h3 class="h4 titel">Populasi Awal</h3>
                       </div>
-                      <div class="col-md-12 form-inline" style="margin-left:10px;margin-top:10px;">
-                        <button type="button" name="button" id="start" class="btn bg-navy"><span class="fa fa-start"></span> Start</button>
-                        <button type="button" name="button" id="reset" class="btn bg-navy" style="margin-left:10px;"><span class="fa fa-refresh"></span> Reset</button>
+                      <div class="card-body">
+                        <div class="col-lg-6">Parent</div>
+                        <div id="result" class="col-lg-6"></div>
+                        <div class="col-lg-6">Crossover <span id="pc"></span></div>
+                        <div id="result2" class="col-lg-6"></div>
+                        <div class="col-lg-6">Mutasi <span id="pm"></span></div>
+                        <div id="result3" class="col-lg-6"></div>
+                        <div class="col-lg-6">Seleksi</div>
+                        <div id="result4" class="col-lg-6"></div>
                       </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-12">
-                  <div class="card">
-                    <div class="card-header d-flex align-items-center">
-                      <h3 class="h4">Populasi Awal</h3>
-                    </div>
-                    <div class="card-body">
-                      <div class="col-lg-6">Populasi</div>
-                      <div id="result" class="col-lg-6"></div>
-                      <div class="col-lg-6">Crossover</div>
-                      <div id="result2" class="col-lg-6"></div>
-                      <div class="col-lg-6">Mutasi</div>
-                      <div id="result3" class="col-lg-6"></div>
-                      <div class="col-lg-6">Seleksi</div>
-                      <div id="result4" class="col-lg-6"></div>
                     </div>
                   </div>
                 </div>
@@ -331,9 +278,13 @@
     var mfitnessess = [];
     var opfitnessess = [];
     var seleksi = [];
+    var mutasi = [];
+    var parent = [];
+    var kum = [];
+    var offspring = [];
     var jmlpop;
     // Initialize google maps
-    function initializeMap() {
+    function initializeMap(){
         // Map options
         var opts = {
             center: new google.maps.LatLng(-6.9932, 110.4203),
@@ -371,14 +322,15 @@
             $('#destinations-count').html(nodes.length);
             $(this).children('option:selected').hide();
             $(this).prop('disabled',true);
-            if (nodes.length >= 1) {
-              // $('.plus').show();
-              // $('.minus').show();
+            if (nodes.length > 0) {
               $(this).closest('.form-inline').prevAll().find('button.plus').hide();
               $(this).closest('.form-inline').prevAll().find('button.minus').hide();
               $(this).closest('.form-inline').find('button.plus').show();
               $(this).closest('.form-inline').find('button.minus').show();
             }
+            if (nodes.length >= 3) {
+                document.getElementById("start").style.display = "block";
+             }
         });
     }
 
@@ -417,10 +369,6 @@
     // Initial Google Maps
     google.maps.event.addDomListener(window, 'load', initializeMap);
     // Create listeners
-    $(document).ready(function() {
-
-    });
-
     function random(str){
       return parseInt(Math.round(Math.random()*(str.length-1)));
     }
@@ -484,6 +432,10 @@
     }
 
     function ga(){
+      var gen = $('#generations').val();
+      var pc = $('#crossover-rate').val();
+      var pm = $('#mutation-rate').val();
+      var elem = $('.rs');
       initpop();
       $.when(this.getjarak()).done(function(x){
         for (var i = 0; i < rute.length; i++) {
@@ -505,25 +457,84 @@
           // console.log(index+' : '+distance[index]);
         }
 
-        var table = '<table width="100%" class="table table-bordered"><tr><th>Nomor</th><th>Parent</th><th>Rute</th><th>Jarak</th><th>Fitness</th></tr>';
-        for (var i = 0; i < pop.length; i++) {
-          var fitness = 0;
-          for (var j = 0; j < pop[i].length-1; j++) {
-            var rute1 = pop[i][j].replace('Surabaya','SBY');
-            var rute2 = pop[i][j+1].replace('Surabaya','SBY');
-            var index = rute1+'-'+rute2;
-            fitness += distance[index];
+        for (var iter = 0; iter < gen; iter++) {
+          var root;
+          if(iter > 0){
+            $('#ga').append(elem.clone()).html();
           }
-          dfitnessess[i] = fitness;
-          mfitnessess[i] = fitness;
-          seleksi.push(pop[i]);
-
-          table += '<tr><td>'+parseInt(i+1)+'</td><td>Parent'+parseInt(i+1)+'</td><td>'+pop[i]+'</td><td>'+fitness.toFixed(3)+'</td><td>'+1/fitness+'</td></tr>'
+          $('div.rs:eq('+iter+')').find('h3.titel').html('Generasi '+(parseInt(iter+1)));
         }
-        table += '</table>';
-        $('#result').html(table);
 
+        for (var iter = 0; iter < gen; iter++) {
+          fitnessess = [];
+          dfitnessess = [];
+          mfitnessess = [];
+          opfitnessess = [];
+          seleksi = [];
+          mutasi = [];
+          parent = [];
+          kum = [];
+          offspring = [];
+          this.prosesga(pop,distance,pc,pm,iter);
+        }
 
+        // Add route to map
+       directionsService = new google.maps.DirectionsService();
+       directionsDisplay = new google.maps.DirectionsRenderer();
+       directionsDisplay.setMap(map);
+       var waypts = [];
+       for (var a = 1; a < pop[0].length; a++) {
+           waypts.push({
+               location: nodes[kota.indexOf(pop[0][a])],
+               stopover: true
+           });
+       }
+
+       // Add final route to map
+       var request = {
+           origin: nodes[kota.indexOf(pop[0][0])],
+           destination: nodes[kota.indexOf(pop[0][0])],
+           waypoints: waypts,
+           travelMode: google.maps.TravelMode.DRIVING,
+           avoidHighways: false,
+           avoidTolls: false
+       };
+       directionsService.route(request, function(response, status) {
+           if (status == google.maps.DirectionsStatus.OK) {
+               directionsDisplay.setDirections(response);
+           }
+           clearMapMarkers();
+       });
+      });
+    }
+
+    function prosesga(pop,distance,pc,pm,iter){
+      var table = '<table width="100%" class="table table-bordered"><tr><th>Nomor</th><th>Parent</th><th>Rute</th><th>Jarak</th><th>Fitness</th></tr>';
+      for (var i = 0; i < pop.length; i++) {
+        var fitness = 0;
+        for (var j = 0; j < pop[i].length-1; j++) {
+          var rute1 = pop[i][j].replace('Surabaya','SBY');
+          var rute2 = pop[i][j+1].replace('Surabaya','SBY');
+          var index = rute1+'-'+rute2;
+          fitness += distance[index];
+          console.log(fitness);
+          if(isNaN(fitness)){
+            alert('Kesalahan gmaps. Jarak ada yg tidak terhitung');
+            location.reload();
+          }
+        }
+        dfitnessess[i] = fitness;
+        mfitnessess[i] = fitness;
+        seleksi.push(pop[i]);
+
+        table += '<tr><td>'+parseInt(i+1)+'</td><td>Parent'+parseInt(i+1)+'</td><td>'+pop[i]+'</td><td>'+fitness.toFixed(3)+'</td><td>'+1/fitness+'</td></tr>'
+      }
+      table += '</table>';
+      $('div.rs:eq('+iter+')').find('div#result').html(table);
+
+      var random = Math.random();
+      if(random <= pc){
+        $('div.rs:eq('+iter+')').find('span#pc').html('(nilai random : '+random+')');
         this.crossover(dfitnessess);
         var table = '<table width="100%" class="table table-bordered"><tr><th>Nomor</th><th>Offspring</th><th>Rute</th><th>Jarak</th><th>Fitness</th></tr>';
         for (var i = 0; i < offspring.length; i++) {
@@ -533,15 +544,23 @@
             var rute2 = offspring[i][j+1].replace('Surabaya','SBY');
             var index = rute1+'-'+rute2;
             fitness += distance[index];
+            console.log(fitness);
           }
           seleksi.push(offspring[i]);
 
           table += '<tr><td>'+parseInt(i+1)+'</td><td>Offspring'+parseInt(i+1)+'</td><td>'+offspring[i]+'</td><td>'+fitness.toFixed(3)+'</td><td>'+1/fitness+'</td></tr>'
         }
         table += '</table>';
-        $('#result2').html(table);
+        $('div.rs:eq('+iter+')').find('div#result2').html(table);
+      }else{
+        $('div.rs:eq('+iter+')').find('span#pc').html('(nilai random : '+random+')');
+        $('div.rs:eq('+iter+')').find('div#result2').html('Tidak terjadi operasi crossover<br><br>');
+        $('div.rs:eq('+iter+')').find('div#result2').css('color','red');
+      }
 
-        var mutasi = [];
+      random = Math.random();
+      if(random <= pm){
+        $('div.rs:eq('+iter+')').find('span#pm').html('(nilai random : '+random+')');
         mutasi.push(this.mutasi(mfitnessess));
         var table = '<table width="100%" class="table table-bordered"><tr><th>Nomor</th><th>Offspring</th><th>Rute</th><th>Jarak</th><th>Fitness</th></tr>';
         for (var i = 0; i < mutasi.length; i++) {
@@ -551,52 +570,56 @@
             var rute2 = mutasi[i][j+1].replace('Surabaya','SBY');
             var index = rute1+'-'+rute2;
             fitness += distance[index];
+            console.log(fitness);
           }
           seleksi.push(mutasi[i]);
 
           table += '<tr><td>'+parseInt(i+1)+'</td><td>Offspring'+parseInt(i+1)+'</td><td>'+mutasi[i]+'</td><td>'+fitness.toFixed(3)+'</td><td>'+1/fitness+'</td></tr>'
         }
         table += '</table>';
-        $('#result3').html(table);
+        $('div.rs:eq('+iter+')').find('div#result3').html(table);
+      }else{
+        $('div.rs:eq('+iter+')').find('span#pm').html('(nilai random : '+random+')');
+        $('div.rs:eq('+iter+')').find('div#result3').html('Tidak terjadi operasi mutasi<br><br>');
+        $('div.rs:eq('+iter+')').find('div#result3').css('color','red');
+      }
 
-        for (var i = 0; i < seleksi.length; i++) {
-          var fitness = 0;
-          for (var j = 0; j < seleksi[i].length-1; j++) {
-            var rute1 = seleksi[i][j].replace('Surabaya','SBY');
-            var rute2 = seleksi[i][j+1].replace('Surabaya','SBY');
-            var index = rute1+'-'+rute2;
-            fitness += distance[index];
-          }
-          fitnessess[i] = fitness;
+      for (var i = 0; i < seleksi.length; i++) {
+        var fitness = 0;
+        for (var j = 0; j < seleksi[i].length-1; j++) {
+          var rute1 = seleksi[i][j].replace('Surabaya','SBY');
+          var rute2 = seleksi[i][j+1].replace('Surabaya','SBY');
+          var index = rute1+'-'+rute2;
+          fitness += distance[index];
         }
+        fitnessess[i] = fitness;
+      }
 
-        var selection = [];
-        for (var i = 0; i < seleksi.length; i++) {
-          selection.push({
-              "rute"  : seleksi[i],
-              "jarak" : fitnessess[i]
-          });
-        }
-        selection.sort(function(a, b){
-            return a.jarak - b.jarak;
+      var selection = [];
+      for (var i = 0; i < seleksi.length; i++) {
+        selection.push({
+            "rute"  : seleksi[i],
+            "jarak" : fitnessess[i]
         });
+      }
 
-        var table = '<table width="100%" class="table table-bordered"><tr><th>Nomor</th><th>Individu</th><th>Rute</th><th>Jarak</th><th>Fitness</th></tr>';
-        for (var i = 0; i < selection.length; i++) {
-          table += '<tr><td>'+parseInt(i+1)+'</td><td>Individu'+parseInt(i+1)+'</td><td>'+selection[i].rute+'</td><td>'+(selection[i].jarak).toFixed(3)+'</td><td>'+(1/selection[i].jarak)+'</td></tr>'
-        }
-        table += '</table>';
-        $('#result4').html(table);
-
+      $.when(
+      selection.sort(function(a, b){
+          return a.jarak - b.jarak;
+      })).done(function(x){
         for (var i = 0; i < pop.length; i++) {
           pop[i] = selection[i].rute;
         }
-      });
+      })
+
+      var table = '<table width="100%" class="table table-bordered"><tr><th>Nomor</th><th>Individu</th><th>Rute</th><th>Jarak</th><th>Fitness</th></tr>';
+      for (var i = 0; i < selection.length; i++) {
+        table += '<tr><td>'+parseInt(i+1)+'</td><td>Individu'+parseInt(i+1)+'</td><td>'+selection[i].rute+'</td><td>'+(selection[i].jarak).toFixed(3)+'</td><td>'+(1/selection[i].jarak)+'</td></tr>'
+      }
+      table += '</table>';
+      $('div.rs:eq('+iter+')').find('div#result4').html(table);
     }
 
-    var parent = [];
-    var kum = [];
-    var offspring = [];
     function roullete(arr){
       parent = [0,0];
       var sum = 0;
@@ -699,6 +722,7 @@
     $(document).on('click','.plus',function(){
       var elem = $(this).closest('.form-inline');
       var kotake = parseInt($(this).closest('.form-inline').find('.kotake').html().replace('Kota ',''));
+      var elem2 = document.getElementById("start")
       $('#pilihkota').append(elem.clone()).html();
       elem.find('button.minus').hide();
       elem.find('button.plus').hide();
@@ -709,6 +733,11 @@
       elem.next().find('.kotake').html('Kota '+parseInt(kotake+1));
       elem.next().find('.kota').prop('disabled',false);
       $(this).closest('div.col-md-2').hide();
+      if (nodes.length >= 3) {
+           elem2.style.display = "block";
+         } else if (nodes.length < 3) {
+           elem2.style.display = "none";
+         }
     }).on('click','.minus', function(){
       var index = $(this).closest('.form-inline').index();
       if(index == 0){
@@ -725,6 +754,12 @@
       markers[index].setMap(null);
       markers.splice(index,1);
       nodes.splice(index,1);
+      $('#destinations-count').html(nodes.length);
+       if (nodes.length >= 3) {
+           elem2.style.display = "block";
+         } else if (nodes.length < 3) {
+           elem2.style.display = "none";
+         }
     }).on('click','#reset', function(){
       var elem = $('#pilihkota div').first();
       $('option').show();
@@ -732,6 +767,10 @@
       $('.kota').children('option:eq(0)').prop('selected',true);
       $('#pilihkota').empty().append(elem);
       $('#pilihkota div').first().find('div.col-md-2').show();
+      $('#result').empty();
+      $('#result2').empty();
+      $('#result3').empty();
+      $('#result4').empty();
       clearMap();
     }).on('click','#start', function(){
       ga();
