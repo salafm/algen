@@ -115,32 +115,6 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>Hindari Jalan Tol: </td>
-                                <td>
-                                  <div class="input-group col-md-12">
-                                    <select class="tol form-control" id="avoid-highways">
-                                        <option value="1">Enabled</option>
-                                        <option value="0" selected="selected">Disabled</option>
-                                    </select>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Population Size: </td>
-                                <td>
-                                  <div class="input-group col-md-12">
-                                    <select class="popsize form-control" id="population-size">
-                                        <option value="5">5</option>
-                                        <option value="10">10</option>
-                                        <option value="20">20</option>
-                                        <option value="50" selected="selected">50</option>
-                                        <option value="100">100</option>
-                                        <option value="200">200</option>
-                                    </select>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
                                 <td>Mutation Rate: </td>
                                 <td>
                                   <div class="input-group col-md-12">
@@ -175,17 +149,6 @@
                                         <option value="1">1.0</option>
                                     </select>
                                     </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Elitism: </td>
-                                <td>
-                                    <div class="input-group col-md-12">
-                                    <select class="elitism form-control" id="elitism">
-                                        <option value="1" selected="selected">Enabled</option>
-                                        <option value="0">Disabled</option>
-                                    </select>
-                                  </div>
                                 </td>
                             </tr>
                             <tr>
@@ -751,6 +714,7 @@
       $('#result2').empty();
       $('#result3').empty();
       $('#result4').empty();
+      document.getElementById("start").style.display = "none";
       $('#pilihkota div').first().find('div.col-md-2').show();
       clearMap();
     }).on('click','#start', function(){
