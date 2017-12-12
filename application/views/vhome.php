@@ -92,6 +92,21 @@
                   </div>
                 </div>
 
+                <div class="col-lg-12 hsl" id="kolhasil" style="display:none">
+                  <div class="card">
+                    <div class="card-header d-flex align-items-center">
+                      <h3 class="h4">Hasil</h3>
+                    </div>
+                    <div class="card-body">
+                      <div class="col-lg-6">Rute tercepat</div>
+                      <div id="resultrute" class="col-lg-6"></div>
+                      <div class="col-lg-6">Jarak </div>
+                      <div id="resultjarak" class="col-lg-6"></div>
+                    </div>
+                  </div>
+                </div>
+
+
                 <div class="col-lg-6">
                   <div class="card">
                     <div class="card-header d-flex align-items-center">
@@ -282,6 +297,7 @@
     var kum = [];
     var offspring = [];
     var jmlpop;
+    var jarax = [];
     var gen;
     var pc;
     var pm;
@@ -543,6 +559,12 @@
           offspring = [];
           this.prosesga(pop,distance,pc,pm,iter);
         }
+        var haseel = pop[0];
+        var haseeljarak = jarax[0];
+        var hasilrute = '<p>'+haseel+'</p>';
+        var hasiljarak = '<p>'+haseeljarak+'</p>';
+        $('div.hsl').find('div#resultrute').html(hasilrute);
+        $('div.hsl').find('div#resultjarak').html(hasiljarak);
 
         // Add route to map
        directionsService = new google.maps.DirectionsService();
@@ -687,6 +709,7 @@
       })).done(function(x){
         for (var i = 0; i < pop.length; i++) {
           pop[i] = selection[i].rute;
+          jarax[i] = selection[i].jarak;
         }
       })
 
@@ -818,6 +841,7 @@
          }
     }).on('click','.minus', function(){
       var index = $(this).closest('.form-inline').index();
+      var elem2 = document.getElementById("start");
       if(index == 0){
         $(this).closest('.form-inline').find('.kota').prop('disabled',false);
         $(this).closest('.form-inline').find('button.plus').hide();
@@ -844,11 +868,18 @@
       $('.kota').prop('disabled',false);
       $('.kota').children('option:eq(0)').prop('selected',true);
       $('#pilihkota').empty().append(elem);
-      $('#pilihkota div').first().find('div.col-md-2').show();
       $('#result').empty();
       $('#result2').empty();
       $('#result3').empty();
       $('#result4').empty();
+      document.getElementById("start").style.display = "none";
+      $('#pilihkota div').first().find('div.col-md-2').show();
+      $('.rs').not(':first').remove();
+      $('#result').empty();
+      $('#result2').empty();
+      $('#result3').empty();
+      $('#result4').empty();
+      nodes.splice(0,nodes.length);
       clearMap();
     }).on('click','#start', function(){
       ga();
@@ -856,6 +887,7 @@
       pc = $('#crossover-rate').val();
       pm = $('#mutation-rate').val();
       elemen = $('.rs');
+      document.getElementById("kolhasil").style.display = "block";
     });
     </script>
   </body>
