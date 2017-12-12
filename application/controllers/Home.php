@@ -22,4 +22,16 @@ class Home extends CI_Controller {
 	{
 		$this->load->view('vhome');
 	}
+
+	function simpanrute()
+	{
+		$rute = $this->input->post('rute');
+		$jarak = $this->input->post('jarak');
+		$input = array(
+			'route' => $rute,
+			'jarak' => $jarak
+		);
+
+		$this->db->insert('rute',$input);
+	}
 }

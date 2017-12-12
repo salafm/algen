@@ -186,9 +186,14 @@
                                   <div class="input-group col-md-12">
                                     <select class="maxgen form-control" id="generations">
                                       <option value="2">2</option>
-                                      <option value="3" selected>3</option>
+                                      <option value="3">3</option>
                                       <option value="4">4</option>
-                                      <option value="5">5</option>
+                                      <option value="5" selected>5</option>
+                                      <option value="6">6</option>
+                                      <option value="7">7</option>
+                                      <option value="8">8</option>
+                                      <option value="9">9</option>
+                                      <option value="10">10</option>
                                     </select>
                                     </div>
                                 </td>
@@ -267,7 +272,6 @@
     var markers = [];
     var jarak = [];
     var rute = [];
-    var distance = [];
     var fitnessess = [];
     var dfitnessess = [];
     var mfitnessess = [];
@@ -282,6 +286,64 @@
     var pc;
     var pm;
     var elemen;
+    var distance = [];
+    distance['Bogor-Jakarta'] = 58.027;
+    distance['Bogor-Kediri'] =  747.55;
+    distance['Bogor-Yogyakarta'] = 557.222;
+    distance['Bogor-Bandung'] = 183.561;
+    distance['Bogor-Semarang'] = 490.754;
+    distance['Bogor-SBY'] = 801.585;
+    distance['Bogor-Pekalongan'] = 392.008;
+    distance['Bandung-Jakarta'] = 150.243;
+    distance['Bandung-Yogyakarta'] = 518.008
+    distance['Bandung-Kediri'] = 708.416;
+    distance['Bandung-Bogor'] = 181.122;
+    distance['Bandung-Pekalongan'] = 352.955;
+    distance['Bandung-Semarang'] = 451.621;
+    distance['Bandung-SBY'] = 762.541;
+    distance['Pekalongan-Bogor'] = 385.376;
+    distance['Pekalongan-Yogyakarta'] = 173.007;
+    distance['Pekalongan-Jakarta'] = 354.497;
+    distance['Pekalongan-Bandung'] = 348.411;
+    distance['Pekalongan-Kediri'] = 357.004;
+    distance['Pekalongan-SBY'] = 411.04;
+    distance['Pekalongan-Semarang'] = 100.209;
+    distance['Kediri-Bogor'] = 736.372;
+    distance['Kediri-Yogyakarta'] = 239.645;
+    distance['Kediri-Jakarta'] = 705.493;
+    distance['Kediri-Bandung'] = 699.407;
+    distance['Kediri-Pekalongan'] = 351.68;
+    distance['Kediri-SBY'] = 125.657;
+    distance['Kediri-Semarang'] = 260.533;
+    distance['SBY-Bogor'] = 799.279;
+    distance['SBY-Yogyakarta'] = 327.497;
+    distance['SBY-Jakarta'] = 768.4;
+    distance['SBY-Bandung'] = 762.313;
+    distance['SBY-Pekalongan'] = 414.586;
+    distance['SBY-Kediri'] = 124.853;
+    distance['SBY-Semarang'] = 312.203;
+    distance['Semarang-Bogor'] = 482.295;
+    distance['Semarang-Yogyakarta'] = 121.19;
+    distance['Semarang-Jakarta'] = 451.416;
+    distance['Semarang-Bandung'] = 445.33;
+    distance['Semarang-Pekalongan'] = 97.602;
+    distance['Semarang-Kediri'] = 260.667;
+    distance['Semarang-SBY'] = 312.81;
+    distance['Jakarta-Bogor'] = 53.77;
+    distance['Jakarta-Yogyakarta'] = 520.536;
+    distance['Jakarta-Bandung'] = 146.875;
+    distance['Jakarta-Pekalongan'] = 355.403;
+    distance['Jakarta-Kediri'] = 243.088;
+    distance['Jakarta-SBY'] = 764.899;
+    distance['Jakarta-Semarang'] = 454.068;
+    distance['Yogyakarta-Bogor'] = 555.114;
+    distance['Yogyakarta-Jakarta'] = 524.235;
+    distance['Yogyakarta-Bandung'] = 518.149;
+    distance['Yogyakarta-Pekalongan'] = 170.076;
+    distance['Yogyakarta-Kediri'] = 243.008;
+    distance['Yogyakarta-SBY'] = 331.402;
+    distance['Yogyakarta-Semarang'] = 121.611;
+
     // Initialize google maps
     function initializeMap(){
         // Map options
@@ -433,26 +495,33 @@
     function ga(){
       initpop();
       $.when(this.getjarak()).done(function(x){
-        for (var i = 0; i < rute.length; i++) {
-          // console.log('fullpath :('+i+')'+rute[i]);
-          rute[i] = rute[i].replace('Surabaya','SBY');
-          var city = rute[i].split('-');
-          for (var index in jarak) {
-            var addr = index.split('*');
-            if(addr[0].includes(city[0]) && addr[1].includes(city[1])){
-              distance[rute[i]] = jarak[index];
-            }else{
-              // distance[rute[i]] = 0;
-            }
-            //console.log(index+' : '+jarak[index]);
-          }
-        }
+        // for (var i = 0; i < rute.length; i++) {
+        //   // console.log('fullpath :('+i+')'+rute[i]);
+        //   rute[i] = rute[i].replace('Surabaya','SBY');
+        //   var city = rute[i].split('-');
+        //   for (var index in jarak) {
+        //     var addr = index.split('*');
+        //     if(addr[0].includes(city[0]) && addr[1].includes(city[1])){
+        //       distance[rute[i]] = jarak[index];
+        //     }else{
+        //       // distance[rute[i]] = 0;
+        //     }
+        //     //console.log(index+' : '+jarak[index]);
+        //   }
+        // }
+
+        // for (var i = 0; i < kota.length; i++) {
+        //   for (var j = 0; j < kota.length; j++) {
+        //     var index = kota[i]+'-'+kota[j];
+        //     console.log(index);
+        //   }
+        // }
 
         var no = 1;
         for (var index in distance) {
           console.log('array('+no+')'+index+' : '+distance[index]);
           no++;
-        } 
+        }
 
         for (var iter = 0; iter < gen; iter++) {
           var root;
