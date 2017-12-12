@@ -92,6 +92,18 @@
                   </div>
                 </div>
 
+                <div class="col-lg-12 hsl" id="kolhasil" style="display:none">
+                  <div class="card">
+                    <div class="card-header d-flex align-items-center">
+                      <h3 class="h4">Hasil</h3>
+                    </div>
+                    <div class="card-body" >
+                      <div id="resultfinal" class="col-lg-6"></div>
+                    </div>
+                  </div>
+                </div>
+
+
                 <div class="col-lg-6">
                   <div class="card">
                     <div class="card-header d-flex align-items-center">
@@ -452,7 +464,7 @@
         for (var index in distance) {
           console.log('array('+no+')'+index+' : '+distance[index]);
           no++;
-        } 
+        }
 
         for (var iter = 0; iter < gen; iter++) {
           var root;
@@ -474,6 +486,9 @@
           offspring = [];
           this.prosesga(pop,distance,pc,pm,iter);
         }
+        var haseel = pop[0];
+        var hasilakhir = '<p>'+haseel+'</p>';
+        $('div.hsl').find('div#resultfinal').html(hasilakhir);
 
         // Add route to map
        directionsService = new google.maps.DirectionsService();
@@ -795,6 +810,7 @@
       pc = $('#crossover-rate').val();
       pm = $('#mutation-rate').val();
       elemen = $('.rs');
+      document.getElementById("kolhasil").style.display = "block";
     });
     </script>
   </body>
